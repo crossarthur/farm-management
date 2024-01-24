@@ -1,0 +1,26 @@
+{%extends 'poultry/base.html'%}
+
+{%load crispy_forms_tags%}
+{%block head%}Log Out{%endblock%}
+
+{%block content%}
+
+
+
+
+<div class="container">
+<div class="row">
+    <div class="col-4"></div>
+            <div class="border bg-white p-3">
+                <h3>Logout Page</h3>
+                <hr>
+                <div class="alert alert-danger">
+                    <h5>You have been logged Out</h5>
+                </div>
+                <a href="{%url 'login'%}" class="btn btn-danger rounded-pill">Login</a>
+            </div>
+  </div>
+</div>
+</div>
+
+{%endblock%}

@@ -1,0 +1,145 @@
+{%extends 'poultry/base.html'%}
+
+{%load crispy_forms_tags%}
+{%block head%}Drugs Overview{%endblock%}
+
+{%block content%}
+
+
+ <div class="container-fluid">
+
+ <div class="row">
+  <div class="col-md-8 offset-2">
+      <hr class="text-danger">
+      <div class="row">
+          <div class="col-7">
+               <h2>Drugs Overview
+      <i>
+           <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-capsule text-danger" viewBox="0 0 16 16">
+         <path d="M1.828 8.9 8.9 1.827a4 4 0 1 1 5.657 5.657l-7.07 7.071A4 4 0 1 1 1.827 8.9Zm9.128.771 2.893-2.893a3 3 0 1 0-4.243-4.242L6.713 5.429z"/>
+         </svg>
+      </i>
+               </h2>
+          </div>
+          <div class="col-3">
+              <form method="get" class="d-flex align-self-right form-inline ml-3">
+              {%csrf_token%}
+          <div class="form-group mx-1">
+    <label class="sr-only">Search</label>
+    <input type="date" class="form-control" id="inputPassword2" name="date">
+  </div>
+  <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill mb-2">Filter</button>
+</form>
+          </div>
+      </div>
+
+
+      </h1>
+
+{%if queryset and date%}
+      <div>{%include 'poultry/message.html'%}</div>
+   <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">drug Description</th>
+      <th scope="col">drug Quantity</th>
+       <th scope="col">Date</th>
+         {%if user.is_superuser%}
+         <th scope="col">Action</th>
+        {%endif%}
+
+
+    </tr>
+  <hr class="text-danger">
+  </thead>
+  <tbody>
+   {%for rows in queryset%}
+    <tr>
+       <td>{{rows.id}}</td>
+       <td>{{rows.drug_description}}</td>
+        <td>₦{{rows.drug_cost}}</td>
+       <td>{{rows.date|date:"D d M"}}</td>
+         {%if user.is_superuser%}
+        <td><a href="{%url 'delete_drugs' rows.id%}" class="btn btn-sm btn-danger rounded-pill">Delete</a></td>
+         {%endif%}
+
+
+    </tr>
+    {%endfor%}
+
+  </tbody>
+</table>
+</div>
+     <div class="col-md-4">
+   <div class="overview-wrap">
+      <h2 class="title-1"></h2>
+      <a href="{%url 'drugs_overview'%}"><button class="btn au-btn btn-sm btn-danger rounded-pill my-3">
+      <i class="zmdi zmdi-plus"></i>add drugs</button></a>
+
+ </div>
+    </div>
+     <div class="col-md-2">
+      <a href="{%url 'drugs_overview'%}" class="btn au-btn btn-sm btn-danger rounded-pill my-3">Refresh</a>
+         </div>
+
+</div>
+  </div>
+      {%elif queryset.count == 0%}
+<div>{%include 'poultry/message.html'%}</div>
+   <h3 class="my-2">No Data Found</h3>
+
+
+<div class="col-md-2">
+      <a href="{%url 'drugs_overview'%}" class="btn au-btn btn-sm btn-danger rounded-pill my-3">Refresh</a>
+</div>
+
+{%else%}
+
+   <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Drug Description</th>
+      <th scope="col">Drug Quantity</th>
+       <th scope="col">Date</th>
+         {%if user.is_superuser%}
+        <th scope="col">Action</th>
+         {%endif%}
+
+
+    </tr>
+  <hr class="text-danger">
+  </thead>
+  <tbody>
+   {%for rows in chickens_drug%}
+    <tr>
+       <td>{{rows.id}}</td>
+       <td>{{rows.drug_description}}</td>
+        <td>₦{{rows.drug_cost}}</td>
+       <td>{{rows.date|date:"D d M"}}</td>
+         {%if user.is_superuser%}
+       <td><a href="{%url 'delete_drugs' rows.id%}" class="btn btn-sm btn-danger rounded-pill">Delete</a></td>
+         {%endif%}
+
+
+
+    </tr>
+    {%endfor%}
+
+  </tbody>
+</table>
+</div>
+     <div class="col-md-4">
+   <div class="overview-wrap">
+      <h2 class="title-1"></h2>
+      <a href="{%url 'drugs'%}"><button class="btn au-btn btn-sm btn-danger rounded-pill my-3">
+      <i class="zmdi zmdi-plus"></i>add drugs</button></a>
+
+ </div>
+    </div>
+
+</div>
+  </div>
+{%endif%}
+{%endblock%}

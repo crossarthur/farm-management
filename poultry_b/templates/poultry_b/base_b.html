@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="au theme template">
+    <meta name="author" content="Hau Nguyen">
+    <meta name="keywords" content="au theme template">
+     <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- Title Page-->
+    <title>{%block head%}{%endblock%}</title>
+
+    <!-- Fontfaces CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="/static/css/font-face.css" rel="stylesheet" media="all">
+    <link href="/static/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="/static/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+    <link href="/static/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+
+    <!-- Bootstrap CSS-->
+    <link href="/static/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+
+    <!-- Vendor CSS-->
+    <link href="/static/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
+    <link href="/static/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+    <link href="/static/vendor/wow/animate.css" rel="stylesheet" media="all">
+    <link href="/static/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+    <link href="/static/vendor/slick/slick.css" rel="stylesheet" media="all">
+    <link href="/static/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="/static/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="/static/css/theme.css" rel="stylesheet" media="all">
+
+</head>
+
+<body class="animsition">
+    <div class="page-wrapper">
+        <!-- HEADER MOBILE-->
+        <header class="header-mobile d-block d-lg-none">
+
+            <div class="header-mobile__bar">
+                <div class="container-fluid">
+                    <div class="header-mobile-inner">
+
+                        <a class="logo" href="index.html">
+                            <img src="/static/images/icon/NAKAKAAKI LOGO AND LETTER HEAD PNG.png" class="mt-3 my-3 mx-4" style="width: 20%" alt="Nakakaaki" />
+                        </a>
+
+                        <button class="hamburger hamburger--slider mx-3 rounded-pill" type="button">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <nav class="navbar-mobile">
+                <div class="container-fluid">
+                    <div class="container text-light text-center"><b>Welcome {{user.first_name}}!</b>
+
+
+                    <div class="" role="alert">
+
+                                                        {%if imprest < 5000%}
+                                                        <button type="button" class="btn btn-primary btn-sm position-relative float-left">
+                                                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet-fill text-light" viewBox="0 0 16 16">
+                                                          <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v2h6a.5.5 0 0 1 .5.5c0 .253.08.644.306.958.207.288.557.542 1.194.542.637 0 .987-.254 1.194-.542.226-.314.306-.705.306-.958a.5.5 0 0 1 .5-.5h6v-2A1.5 1.5 0 0 0 14.5 2z"/>
+                                                          <path d="M16 6.5h-5.551a2.678 2.678 0 0 1-.443 1.042C9.613 8.088 8.963 8.5 8 8.5c-.963 0-1.613-.412-2.006-.958A2.679 2.679 0 0 1 5.551 6.5H0v6A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5z"/>
+                                                        </svg>
+                                                          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+
+                                                           <p class="text-light" data-toggle="tooltip" data-placement="top" title="Imprest Balance"> ₦{{imprest}}</p>
+
+                                                            <span class="visually-hidden">unread messages</span>
+                                                          </span>
+                                                        </button>
+                                                        {%else%}
+                                                        <button type="button" class="btn btn-primary btn-sm position-relative float-left">
+                                                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet-fill text-light" viewBox="0 0 16 16">
+                                                          <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v2h6a.5.5 0 0 1 .5.5c0 .253.08.644.306.958.207.288.557.542 1.194.542.637 0 .987-.254 1.194-.542.226-.314.306-.705.306-.958a.5.5 0 0 1 .5-.5h6v-2A1.5 1.5 0 0 0 14.5 2z"/>
+                                                          <path d="M16 6.5h-5.551a2.678 2.678 0 0 1-.443 1.042C9.613 8.088 8.963 8.5 8 8.5c-.963 0-1.613-.412-2.006-.958A2.679 2.679 0 0 1 5.551 6.5H0v6A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5z"/>
+                                                        </svg>
+                                                          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success text-light">
+                                                            <p class="text-light" data-toggle="tooltip" data-placement="top" title="Imprest Balance"> ₦{{imprest}}</p>
+
+                                                            <span class="visually-hidden">Impress</span>
+                                                          </span>
+                                                        </button>
+                                                        {%endif%}
+
+
+
+
+
+                    </div>
+                    <ul class="navbar-mobile__list list-unstyled">
+                         <ul>
+                                  <a href="{%url 'chicken'%}" class="btn btn-sm btn-outline-danger rounded-pill my-3">Go to Batch A</a>
+
+                                </ul>
+                    {%if user.is_superuser%}
+                        <li>
+                            <a href="{%url 'index_b'%}">
+                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                        </li>
+                    {%endif%}
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+
+
+                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-feather" viewBox="0 0 16 16">
+                                              <path d="M15.807.531c-.174-.177-.41-.289-.64-.363a3.765 3.765 0 0 0-.833-.15c-.62-.049-1.394 0-2.252.175C10.365.545 8.264 1.415 6.315 3.1c-1.95 1.686-3.168 3.724-3.758 5.423-.294.847-.44 1.634-.429 2.268.005.316.05.62.154.88.017.04.035.082.056.122A68.362 68.362 0 0 0 .08 15.198a.528.528 0 0 0 .157.72.504.504 0 0 0 .705-.16 67.606 67.606 0 0 1 2.158-3.26c.285.141.616.195.958.182.513-.02 1.098-.188 1.723-.49 1.25-.605 2.744-1.787 4.303-3.642l1.518-1.55a.528.528 0 0 0 0-.739l-.729-.744 1.311.209a.504.504 0 0 0 .443-.15c.222-.23.444-.46.663-.684.663-.68 1.292-1.325 1.763-1.892.314-.378.585-.752.754-1.107.163-.345.278-.773.112-1.188a.524.524 0 0 0-.112-.172ZM3.733 11.62C5.385 9.374 7.24 7.215 9.309 5.394l1.21 1.234-1.171 1.196a.526.526 0 0 0-.027.03c-1.5 1.789-2.891 2.867-3.977 3.393-.544.263-.99.378-1.324.39a1.282 1.282 0 0 1-.287-.018Zm6.769-7.22c1.31-1.028 2.7-1.914 4.172-2.6a6.85 6.85 0 0 1-.4.523c-.442.533-1.028 1.134-1.681 1.804l-.51.524-1.581-.25Zm3.346-3.357C9.594 3.147 6.045 6.8 3.149 10.678c.007-.464.121-1.086.37-1.806.533-1.535 1.65-3.415 3.455-4.976 1.807-1.561 3.746-2.36 5.31-2.68a7.97 7.97 0 0 1 1.564-.173Z"/>
+                                            </svg>
+
+                                <span>Chickens</span></a>
+                            <ul class="list-unstyled navbar-mobile-sub__list list-unstyled js-sub-list">
+                                <li>
+                                    <a href="{%url 'chicken_b' %}">Chicken In</a>
+                                </li>
+                                {%if user.is_superuser%}
+                                <li>
+                                    <a href="{%url 'chickens_out_b'%}">Chicken Out</a>
+                                </li>
+                                {%endif%}
+                                <li>
+                                    <a href="{%url 'chickens_slaughtered_b'%}">Chicken Slaughtered/Cold Room</a>
+                                </li>
+                                <li>
+                                    <a href="{%url 'chickens_mortality_b'%}">Chicken Mortality</a>
+                                </li>
+                                 
+
+                            </ul>
+
+
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-feather text-decoration-none" viewBox="0 0 16 16">
+                                              <path d="M15.807.531c-.174-.177-.41-.289-.64-.363a3.765 3.765 0 0 0-.833-.15c-.62-.049-1.394 0-2.252.175C10.365.545 8.264 1.415 6.315 3.1c-1.95 1.686-3.168 3.724-3.758 5.423-.294.847-.44 1.634-.429 2.268.005.316.05.62.154.88.017.04.035.082.056.122A68.362 68.362 0 0 0 .08 15.198a.528.528 0 0 0 .157.72.504.504 0 0 0 .705-.16 67.606 67.606 0 0 1 2.158-3.26c.285.141.616.195.958.182.513-.02 1.098-.188 1.723-.49 1.25-.605 2.744-1.787 4.303-3.642l1.518-1.55a.528.528 0 0 0 0-.739l-.729-.744 1.311.209a.504.504 0 0 0 .443-.15c.222-.23.444-.46.663-.684.663-.68 1.292-1.325 1.763-1.892.314-.378.585-.752.754-1.107.163-.345.278-.773.112-1.188a.524.524 0 0 0-.112-.172ZM3.733 11.62C5.385 9.374 7.24 7.215 9.309 5.394l1.21 1.234-1.171 1.196a.526.526 0 0 0-.027.03c-1.5 1.789-2.891 2.867-3.977 3.393-.544.263-.99.378-1.324.39a1.282 1.282 0 0 1-.287-.018Zm6.769-7.22c1.31-1.028 2.7-1.914 4.172-2.6a6.85 6.85 0 0 1-.4.523c-.442.533-1.028 1.134-1.681 1.804l-.51.524-1.581-.25Zm3.346-3.357C9.594 3.147 6.045 6.8 3.149 10.678c.007-.464.121-1.086.37-1.806.533-1.535 1.65-3.415 3.455-4.976 1.807-1.561 3.746-2.36 5.31-2.68a7.97 7.97 0 0 1 1.564-.173Z"/>
+                                            </svg>
+      <span class="mx-2">Offals</span></a>
+                            <ul class="list-unstyled navbar-mobile-sub__list list-unstyled js-sub-list">
+
+                                 <li>
+                                    <a href="{%url 'offals_b'%}">Add Offals</a>
+                                </li>
+
+                                 <li>
+                                    <a href="{%url 'offals_overview_b'%}">Offals Overview</a>
+                                </li>
+
+                            </ul>
+
+                        {%if user.is_superuser%}
+
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-copy"></i>Feed</a>
+                        <ul class="list-unstyled navbar-mobile-sub__list list-unstyled js-sub-list">
+
+                        <li>
+                                    <a href="{%url 'feed_b'%}">Feed</a>
+                                </li>
+                             <li>
+                                    <a href="{%url 'feed_overview_b'%}">Feeds Overview</a>
+                                </li>
+                            </ul>
+                        {%endif%}
+
+
+                                 <li class="has-sub">
+                            <a class="js-arrow" href="#">
+
+           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-capsule" viewBox="0 0 16 16">
+         <path d="M1.828 8.9 8.9 1.827a4 4 0 1 1 5.657 5.657l-7.07 7.071A4 4 0 1 1 1.827 8.9Zm9.128.771 2.893-2.893a3 3 0 1 0-4.243-4.242L6.713 5.429z"/>
+         </svg>
+      <span class="mx-2">Imprest</span></a>
+                            <ul class="list-unstyled navbar-mobile-sub__list list-unstyled js-sub-list">
+
+                                 <li>
+                                    <a href="{%url 'imprest_b'%}">Add Imprest</a>
+                                </li>
+                                 <li>
+                                    <a href="{%url 'drugs_b'%}">Drugs</a>
+                                </li>
+                                 <li>
+                                    <a href="{%url 'drugs_overview_b'%}">Drugs Overview</a>
+                                </li>
+
+                                <li>
+                                    <a href="{%url 'production_b'%}">Production</a>
+                                </li>
+
+                            </ul>
+
+
+
+                            {%if user.is_superuser%}
+                         <li class="has-sub">
+                            <a class="js-arrow" href="#">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-house-up-fill" viewBox="0 0 16 16">
+                                  <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.354-5.854 1.5 1.5a.5.5 0 0 1-.708.708L13 11.707V14.5a.5.5 0 1 1-1 0v-2.793l-.646.647a.5.5 0 0 1-.708-.707l1.5-1.5a.5.5 0 0 1 .708 0Z"/>
+                                  <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z"/>
+                                  <path d="m8 3.293 4.712 4.712A4.5 4.5 0 0 0 8.758 15H3.5A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
+                                </svg>
+
+                                <span class="mx-2">Necessities</span></a>
+                        <ul class="list-unstyled navbar-mobile-sub__list list-unstyled js-sub-list">
+                             <li>
+                                    <a href="{%url 'necessities_b'%}">Necessities</a>
+                                </li>
+                             <li>
+                                    <a href="{%url 'necessities_overview_b'%}">Necessities Overview</a>
+                                </li>
+                            </ul>
+                                {%endif%}
+
+
+                        {%if user.is_superuser%}
+                         <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fa fa-list-alt" aria-hidden="true"></i>
+                         <span>Notepad</span></a>
+                        <ul class="list-unstyled navbar-mobile-sub__list list-unstyled js-sub-list">
+                             <li>
+                                    <a href="{%url 'notepad_b'%}">Notepad</a>
+                                </li>
+                             <li>
+                                    <a href="{%url 'notepad_overview_b'%}">Notepad Overview</a>
+                                </li>
+                            </ul>
+                            {%endif%}
+
+
+                         <li>
+                            <a href="{%url 'logout'%}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-box-arrow-left mr-3" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
+                              <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+                                </svg><span>Logout</span></a>
+                       </li>
+
+                        {%if user.is_superuser%}
+                          <li>
+                            <a href="{%url 'register'%}">
+                               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-box-arrow-in-right mr-3" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+                              <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                            </svg><span class="mx-3">Register Staff</span></a>
+                       </li>
+
+                        {%endif%}
+
+
+
+
+
+
+                </div>
+            </nav>
+        </header>
+        <!-- END HEADER MOBILE-->
+
+
+
+        <!-- MENU SIDEBAR-->
+        <aside class="menu-sidebar d-none d-lg-block">
+
+            <div class="logo mx-4">
+                  {%if imprest < 5000%}
+                                                        <button type="button" class="btn btn-primary btn-sm position-relative float-left">
+                                                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet-fill text-light" viewBox="0 0 16 16">
+                                                          <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v2h6a.5.5 0 0 1 .5.5c0 .253.08.644.306.958.207.288.557.542 1.194.542.637 0 .987-.254 1.194-.542.226-.314.306-.705.306-.958a.5.5 0 0 1 .5-.5h6v-2A1.5 1.5 0 0 0 14.5 2z"/>
+                                                          <path d="M16 6.5h-5.551a2.678 2.678 0 0 1-.443 1.042C9.613 8.088 8.963 8.5 8 8.5c-.963 0-1.613-.412-2.006-.958A2.679 2.679 0 0 1 5.551 6.5H0v6A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5z"/>
+                                                        </svg>
+                                                          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+
+                                                            <p class="text-light" data-toggle="tooltip" data-placement="top" title="Imprest Balance"> ₦{{imprest}}</p>
+
+                                                            <span class="visually-hidden">unread messages</span>
+                                                          </span>
+                                                        </button>
+                                                        {%else%}
+                                                        <button type="button" class="btn btn-primary btn-sm position-relative float-left">
+                                                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet-fill text-light" viewBox="0 0 16 16">
+                                                          <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v2h6a.5.5 0 0 1 .5.5c0 .253.08.644.306.958.207.288.557.542 1.194.542.637 0 .987-.254 1.194-.542.226-.314.306-.705.306-.958a.5.5 0 0 1 .5-.5h6v-2A1.5 1.5 0 0 0 14.5 2z"/>
+                                                          <path d="M16 6.5h-5.551a2.678 2.678 0 0 1-.443 1.042C9.613 8.088 8.963 8.5 8 8.5c-.963 0-1.613-.412-2.006-.958A2.679 2.679 0 0 1 5.551 6.5H0v6A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5z"/>
+                                                        </svg>
+                                                          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success text-light">
+                                                            <p class="text-light" data-toggle="tooltip" data-placement="top" title="Imprest Balance"> ₦{{imprest}}</p>
+                                                            <span class="visually-hidden">Impress</span>
+                                                          </span>
+                                                        </button>
+                                                        {%endif%}
+                <div class="container justify-content-center">
+                <a href="#">
+                    <img src="/static/images/icon/NAKAKAAKI LOGO AND LETTER HEAD PNG.png" class="mt-3 my-3 mx-4" style="width: 50%" alt="Nakakaaki" />
+                </a>
+</div>
+            </div>
+
+
+            <div class="text-center my-2"><b>Welcome {{user.first_name}}</b></div>
+            <hr class="text-danger">
+
+            <div class="menu-sidebar__content js-scrollbar1">
+                <nav class="navbar-sidebar text-dark">
+                                <ul>
+
+
+                                  <a href="{%url 'chicken'%}" class="btn btn-sm btn-outline-danger rounded-pill">Go to Batch A</a>
+
+                                </ul>
+
+
+                    <ul class="navbar__list">
+
+                        <li class="text-light">
+                            {%if user.is_superuser%}
+                            <a href="{%url 'index_b'%}">
+                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                        </li>
+                    {%endif%}
+                    <ul class="list-unstyled navbar__list">
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+
+
+                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-feather" viewBox="0 0 16 16">
+                                              <path d="M15.807.531c-.174-.177-.41-.289-.64-.363a3.765 3.765 0 0 0-.833-.15c-.62-.049-1.394 0-2.252.175C10.365.545 8.264 1.415 6.315 3.1c-1.95 1.686-3.168 3.724-3.758 5.423-.294.847-.44 1.634-.429 2.268.005.316.05.62.154.88.017.04.035.082.056.122A68.362 68.362 0 0 0 .08 15.198a.528.528 0 0 0 .157.72.504.504 0 0 0 .705-.16 67.606 67.606 0 0 1 2.158-3.26c.285.141.616.195.958.182.513-.02 1.098-.188 1.723-.49 1.25-.605 2.744-1.787 4.303-3.642l1.518-1.55a.528.528 0 0 0 0-.739l-.729-.744 1.311.209a.504.504 0 0 0 .443-.15c.222-.23.444-.46.663-.684.663-.68 1.292-1.325 1.763-1.892.314-.378.585-.752.754-1.107.163-.345.278-.773.112-1.188a.524.524 0 0 0-.112-.172ZM3.733 11.62C5.385 9.374 7.24 7.215 9.309 5.394l1.21 1.234-1.171 1.196a.526.526 0 0 0-.027.03c-1.5 1.789-2.891 2.867-3.977 3.393-.544.263-.99.378-1.324.39a1.282 1.282 0 0 1-.287-.018Zm6.769-7.22c1.31-1.028 2.7-1.914 4.172-2.6a6.85 6.85 0 0 1-.4.523c-.442.533-1.028 1.134-1.681 1.804l-.51.524-1.581-.25Zm3.346-3.357C9.594 3.147 6.045 6.8 3.149 10.678c.007-.464.121-1.086.37-1.806.533-1.535 1.65-3.415 3.455-4.976 1.807-1.561 3.746-2.36 5.31-2.68a7.97 7.97 0 0 1 1.564-.173Z"/>
+                                            </svg>
+
+                                <span class="mx-2">Chickens</span></a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="{%url 'chicken_b' %}">Chicken In</a>
+                                </li>
+                                    {%if user.is_superuser%}
+                                <li>
+
+                                    <a href="{%url 'chickens_out_b'%}">Chicken Out</a>
+
+                                </li>
+                                {%endif%}
+                                <li>
+                                    <a href="{%url 'chickens_slaughtered_b'%}">Chicken Slaughtered/Cold Room</a>
+                                </li>
+                                <li>
+                                    <a href="{%url 'chickens_mortality_b'%}">Chicken Mortality</a>
+                                </li>
+
+
+                            </ul>
+
+
+
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-feather text-decoration-none" viewBox="0 0 16 16">
+                                              <path d="M15.807.531c-.174-.177-.41-.289-.64-.363a3.765 3.765 0 0 0-.833-.15c-.62-.049-1.394 0-2.252.175C10.365.545 8.264 1.415 6.315 3.1c-1.95 1.686-3.168 3.724-3.758 5.423-.294.847-.44 1.634-.429 2.268.005.316.05.62.154.88.017.04.035.082.056.122A68.362 68.362 0 0 0 .08 15.198a.528.528 0 0 0 .157.72.504.504 0 0 0 .705-.16 67.606 67.606 0 0 1 2.158-3.26c.285.141.616.195.958.182.513-.02 1.098-.188 1.723-.49 1.25-.605 2.744-1.787 4.303-3.642l1.518-1.55a.528.528 0 0 0 0-.739l-.729-.744 1.311.209a.504.504 0 0 0 .443-.15c.222-.23.444-.46.663-.684.663-.68 1.292-1.325 1.763-1.892.314-.378.585-.752.754-1.107.163-.345.278-.773.112-1.188a.524.524 0 0 0-.112-.172ZM3.733 11.62C5.385 9.374 7.24 7.215 9.309 5.394l1.21 1.234-1.171 1.196a.526.526 0 0 0-.027.03c-1.5 1.789-2.891 2.867-3.977 3.393-.544.263-.99.378-1.324.39a1.282 1.282 0 0 1-.287-.018Zm6.769-7.22c1.31-1.028 2.7-1.914 4.172-2.6a6.85 6.85 0 0 1-.4.523c-.442.533-1.028 1.134-1.681 1.804l-.51.524-1.581-.25Zm3.346-3.357C9.594 3.147 6.045 6.8 3.149 10.678c.007-.464.121-1.086.37-1.806.533-1.535 1.65-3.415 3.455-4.976 1.807-1.561 3.746-2.36 5.31-2.68a7.97 7.97 0 0 1 1.564-.173Z"/>
+                                            </svg>
+                                        <span class="mx-2">Offals</span></a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+
+                                 <li>
+                                    <a href="{%url 'offals_b'%}">Add Offals</a>
+                                </li>
+
+                                 <li>
+                                    <a href="{%url 'offals_overview_b'%}">Offals Overview</a>
+                                </li>
+
+                            </ul>
+
+                         {%if user.is_superuser%}
+
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-copy"></i>Feed</a>
+                        <ul class="list-unstyled navbar__sub-list js-sub-list">
+
+                             <li>
+                                    <a href="{%url 'feed_b'%}">Feed</a>
+                                </li>
+
+                             <li>
+                                    <a href="{%url 'feed_overview_b'%}">Feeds Overview</a>
+                                </li>
+                            </ul>
+                            {%endif%}
+                         <li class="has-sub">
+                            <a class="js-arrow" href="#">
+
+           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-capsule" viewBox="0 0 16 16">
+         <path d="M1.828 8.9 8.9 1.827a4 4 0 1 1 5.657 5.657l-7.07 7.071A4 4 0 1 1 1.827 8.9Zm9.128.771 2.893-2.893a3 3 0 1 0-4.243-4.242L6.713 5.429z"/>
+         </svg>
+      <span class="mx-2">Imprest</span></a>
+                            <ul class="list-unstyled navbar__sub-list list-unstyled js-sub-list">
+
+                                 <li>
+                                    <a href="{%url 'imprest_b'%}">Add Imprest</a>
+                                </li>
+
+                                 <li>
+                                    <a href="{%url 'drugs_b'%}">Drugs</a>
+                                </li>
+                                 <li>
+                                    <a href="{%url 'drugs_overview_b'%}">Drugs Overview</a>
+                                </li>
+
+                                <li>
+                                    <a href="{%url 'production_b'%}">Production</a>
+                                </li>
+
+                            </ul>
+
+                             {%if user.is_superuser%}
+                         <li class="has-sub">
+                            <a class="js-arrow" href="#">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-house-up-fill" viewBox="0 0 16 16">
+                                  <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.354-5.854 1.5 1.5a.5.5 0 0 1-.708.708L13 11.707V14.5a.5.5 0 1 1-1 0v-2.793l-.646.647a.5.5 0 0 1-.708-.707l1.5-1.5a.5.5 0 0 1 .708 0Z"/>
+                                  <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z"/>
+                                  <path d="m8 3.293 4.712 4.712A4.5 4.5 0 0 0 8.758 15H3.5A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
+                                </svg>
+
+                                <span class="mx-2">Necessities</span></a>
+                        <ul class="list-unstyled navbar__sub-list js-sub-list">
+                             <li>
+                                    <a href="{%url 'necessities_b'%}">Necessities</a>
+                                </li>
+                             <li>
+                                    <a href="{%url 'necessities_overview_b'%}">Necessities Overview</a>
+                                </li>
+                            </ul>
+                             {%endif%}
+
+                          {%if user.is_superuser%}
+                         <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fa fa-list-alt" aria-hidden="true"></i>
+                         <span>Notepad</span></a>
+                        <ul class="list-unstyled navbar__sub-list js-sub-list">
+                             <li>
+                                    <a href="{%url 'notepad_b'%}">Notepad</a>
+                                </li>
+                             <li>
+                                    <a href="{%url 'notepad_overview_b'%}">Notepad Overview</a>
+                                </li>
+                            </ul>
+                            {%endif%}
+                         <li>
+                            <a href="{%url 'logout'%}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
+                              <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+                                </svg><span class="mx-3">Logout</span></a>
+                       </li>
+
+                        {%if user.is_superuser%}
+                          <li>
+                            <a href="{%url 'register'%}">
+                               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+                              <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                            </svg><span class="mx-3">Register Staff</span></a>
+                       </li>
+
+                        {%endif%}
+
+
+                </nav>
+
+            </div>
+        </aside>
+        <!-- END MENU SIDEBAR-->
+
+<!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <!-- HEADER DESKTOP-->
+            <header class="header-desktop bg-dark">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="header-wrap">
+
+                            <div class="header-button">
+                                <div class="noti-wrap">
+
+                                    <div class="noti__item js-item-menu">
+
+                                        <div class="email-dropdown js-dropdown">
+
+
+                                            <div class="email__item">
+                                                <div class="image img-cir img-40">
+                                                    <img src="images/icon/avatar-04.jpg" alt="Cynthia Harvey" />
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="noti__item js-item-menu">
+
+                                        <div class="notifi-dropdown js-dropdown">
+
+                                            <div class="notifi__item">
+
+
+                                            </div>
+                                            <div class="notifi__item">
+
+                                            </div>
+                                            <div class="notifi__item">
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="card-body">
+                                            <div class="container">
+                                                    <div class="row">
+                                                    <div class="" role="alert">
+                                                        {%if user.is_not_superuser%}
+                                                        {%if imprest < 5000%}
+                                                        <button type="button" class="btn btn-primary btn-sm position-relative float-left">
+                                                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet-fill text-light" viewBox="0 0 16 16">
+                                                          <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v2h6a.5.5 0 0 1 .5.5c0 .253.08.644.306.958.207.288.557.542 1.194.542.637 0 .987-.254 1.194-.542.226-.314.306-.705.306-.958a.5.5 0 0 1 .5-.5h6v-2A1.5 1.5 0 0 0 14.5 2z"/>
+                                                          <path d="M16 6.5h-5.551a2.678 2.678 0 0 1-.443 1.042C9.613 8.088 8.963 8.5 8 8.5c-.963 0-1.613-.412-2.006-.958A2.679 2.679 0 0 1 5.551 6.5H0v6A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5z"/>
+                                                        </svg>
+                                                          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+
+                                                            ₦{{imprest}}
+
+                                                            <span class="visually-hidden">unread messages</span>
+                                                          </span>
+                                                        </button>
+                                                        {%else%}
+                                                        <button type="button" class="btn btn-primary btn-sm position-relative float-left">
+                                                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet-fill text-light" viewBox="0 0 16 16">
+                                                          <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v2h6a.5.5 0 0 1 .5.5c0 .253.08.644.306.958.207.288.557.542 1.194.542.637 0 .987-.254 1.194-.542.226-.314.306-.705.306-.958a.5.5 0 0 1 .5-.5h6v-2A1.5 1.5 0 0 0 14.5 2z"/>
+                                                          <path d="M16 6.5h-5.551a2.678 2.678 0 0 1-.443 1.042C9.613 8.088 8.963 8.5 8 8.5c-.963 0-1.613-.412-2.006-.958A2.679 2.679 0 0 1 5.551 6.5H0v6A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5z"/>
+                                                        </svg>
+                                                          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success text-light">
+                                                            ₦{{imprest}}
+
+                                                            <span class="visually-hidden">Impress</span>
+                                                          </span>
+                                                        </button>
+                                                        {%endif%}
+                                                        {%endif%}
+                                                  <button type="button" onclick="this.parentNode.parentNode.removeChild(this.parentNode);"</button>
+                                                   <marquee><p style="font-family: Larrington; font-size: 14pt" class="text-light">Nakakaaki Farms, Plot 556, Karfe Town Off Suleja-Kaduna Express Way, By Zuma Barracks</p></marquee>
+                                                </div>
+                                                    </div>
+                                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- HEADER DESKTOP-->
+
+
+ <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+<style>
+
+
+
+
+</style>
+                                <div class="overview-wrap">
+
+
+
+
+
+        {%block content%}{%endblock%}
+    </p>
+</div>
+  </div>
+</div>
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+ </div>
+
+
+
+            <div class="row bg-dark">
+                            <div class="col">
+                                <div class="copyright">
+                                    <p class="text-light">Copyright © 2023 Arthur. All rights reserved Nakakaaki Farms</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+
+    </div>
+
+    <!-- Jquery JS-->
+    <script src="/static/vendor/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap JS-->
+    <script src="/static/vendor/bootstrap-4.1/popper.min.js"></script>
+    <script src="/static/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+    <!-- Vendor JS       -->
+    <script src="/static/vendor/slick/slick.min.js">
+    </script>
+    <script src="/static/vendor/wow/wow.min.js"></script>
+    <script src="/static/vendor/animsition/animsition.min.js"></script>
+    <script src="/static/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+    </script>
+    <script src="/static/vendor/counter-up/jquery.waypoints.min.js"></script>
+    <script src="/static/vendor/counter-up/jquery.counterup.min.js">
+    </script>
+    <script src="/static/vendor/circle-progress/circle-progress.min.js"></script>
+    <script src="/static/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/static/vendor/chartjs/Chart.bundle.min.js"></script>
+    <script src="/static/vendor/select2/select2.min.js">
+    </script>
+
+    <!-- Main JS-->
+    <script src="/static/js/main.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+
+</body>
+
+</html>
+<!-- end document-->

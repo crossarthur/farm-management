@@ -1,0 +1,153 @@
+{%extends 'poultry/base.html'%}
+
+{%load crispy_forms_tags%}
+{%block head%}Feed Overview{%endblock%}
+
+{%block content%}
+
+
+
+
+<div class="container-fluid">
+
+ <div class="row">
+  <div class="col-md-8 offset-2">
+      <hr class="text-danger">
+      <div class="row">
+          <div class="col-7">
+               <h2>Feed Overview
+      <i>
+               <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-archive-fill text-danger" viewBox="0 0 16 16">
+      <path d="M12.643 15C13.979 15 15 13.845 15 12.5V5H1v7.5C1 13.845 2.021 15 3.357 15zM5.5 7h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1M.8 1a.8.8 0 0 0-.8.8V3a.8.8 0 0 0 .8.8h14.4A.8.8 0 0 0 16 3V1.8a.8.8 0 0 0-.8-.8H.8z"/>
+    </svg>
+      </i>
+               </h2>
+          </div>
+          <div class="col-3">
+              <form method="get" class="d-flex align-self-right form-inline ml-3">
+              {%csrf_token%}
+          <div class="form-group mx-1">
+    <label class="sr-only">Search</label>
+    <input type="date" class="form-control" id="inputPassword2" name="date">
+  </div>
+  <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill mb-2">Filter</button>
+</form>
+          </div>
+      </div>
+
+
+      </h1>
+
+
+
+   {%if queryset and date%}
+      <div>{%include 'poultry/message.html'%}</div>
+   <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Feed Description</th>
+      <th scope="col">Feed Quantity</th>
+       <th scope="col">Date</th>
+        {%if user.is_superuser%}
+         <th scope="col">Action</th>
+        {%endif%}
+
+
+    </tr>
+  <hr class="text-danger">
+  </thead>
+  <tbody>
+   {%for rows in queryset%}
+    <tr>
+       <td>{{rows.id}}</td>
+       <td>{{rows.feed_description}}</td>
+        <td>{{rows.feed_quantity}}KG</td>
+        <td>₦{{rows.feed_cost}}</td>
+       <td>{{rows.date|date:"D d M"}}</td>
+        {%if user.is_superuser%}
+        <td><a href="{%url 'update_feed' rows.id%}" class="btn btn-sm btn-primary rounded-pill">Update</a></td>
+         {%endif%}
+
+
+
+    </tr>
+    {%endfor%}
+
+  </tbody>
+</table>
+</div>
+     <div class="col-md-4">
+   <div class="overview-wrap">
+      <h2 class="title-1"></h2>
+      <a href="{%url 'feed'%}"><button class="btn au-btn btn-sm btn-danger rounded-pill my-3">
+      <i class="zmdi zmdi-plus"></i>add feed</button></a>
+
+ </div>
+    </div>
+     <div class="col-md-2">
+      <a href="{%url 'feed_overview'%}" class="btn au-btn btn-sm btn-danger rounded-pill my-3">Refresh</a>
+         </div>
+
+</div>
+  </div>
+      {%elif queryset.count == 0%}
+<div>{%include 'poultry/message.html'%}</div>
+   <h3 class="my-2">No Data Found</h3>
+
+
+<div class="col-md-2">
+      <a href="{%url 'feed_overview'%}" class="btn au-btn btn-sm btn-danger rounded-pill my-3">Refresh</a>
+</div>
+
+{%else%}
+<div>{%include 'poultry/message.html'%}</div>
+   <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Feed Description</th>
+      <th scope="col">Feed Quantity</th>
+        <th scope="col">Feed Cost</th>
+       <th scope="col">Date</th>
+        {%if user.is_superuser%}
+         <th scope="col">Action</th>
+        {%endif%}
+
+
+    </tr>
+  <hr class="text-danger">
+  </thead>
+  <tbody>
+   {%for rows in chickens_feed%}
+    <tr>
+       <td>{{rows.id}}</td>
+       <td>{{rows.feed_description}}</td>
+        <td>{{rows.feed_quantity}}KG</td>
+        <td>₦{{rows.feed_cost}}</td>
+       <td>{{rows.date|date:"D d M"}}</td>
+         {%if user.is_superuser%}
+        <td><a href="{%url 'update_feed' rows.id%}" class="btn btn-sm btn-primary rounded-pill">Update</a></td>
+         {%endif%}
+
+
+
+    </tr>
+    {%endfor%}
+
+  </tbody>
+</table>
+</div>
+     <div class="col-md-4">
+   <div class="overview-wrap">
+      <h2 class="title-1"></h2>
+      <a href="{%url 'feed'%}"><button class="btn au-btn btn-sm btn-danger rounded-pill my-3">
+      <i class="zmdi zmdi-plus"></i>add feed</button></a>
+
+ </div>
+    </div>
+
+</div>
+  </div>
+{%endif%}
+{%endblock%}

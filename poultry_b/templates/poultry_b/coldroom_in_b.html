@@ -1,0 +1,153 @@
+{%extends 'poultry_b/base_b.html'%}
+{%load crispy_forms_tags%}
+{%block head%}Chicken In Freezer{%endblock%}
+
+{%block content%}
+
+
+
+
+
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-8 offset-2">
+                            <div>{%include 'poultry/message.html'%}</div>
+
+                              <h1>Chickens in Freezer
+
+                                   <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-thermometer-snow text-danger" viewBox="0 0 16 16">
+                                      <path d="M5 12.5a1.5 1.5 0 1 1-2-1.415V9.5a.5.5 0 0 1 1 0v1.585A1.5 1.5 0 0 1 5 12.5"/>
+                                      <path d="M1 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0zM3.5 1A1.5 1.5 0 0 0 2 2.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0L5 10.486V2.5A1.5 1.5 0 0 0 3.5 1m5 1a.5.5 0 0 1 .5.5v1.293l.646-.647a.5.5 0 0 1 .708.708L9 5.207v1.927l1.669-.963.495-1.85a.5.5 0 1 1 .966.26l-.237.882 1.12-.646a.5.5 0 0 1 .5.866l-1.12.646.884.237a.5.5 0 1 1-.26.966l-1.848-.495L9.5 8l1.669.963 1.849-.495a.5.5 0 1 1 .258.966l-.883.237 1.12.646a.5.5 0 0 1-.5.866l-1.12-.646.237.883a.5.5 0 1 1-.966.258L10.67 9.83 9 8.866v1.927l1.354 1.353a.5.5 0 0 1-.708.708L9 12.207V13.5a.5.5 0 0 1-1 0v-11a.5.5 0 0 1 .5-.5"/>
+                                    </svg>
+
+                              </h1>
+</button>
+                                <a href="{%url 'total_coldroom'%}" class="btn btn-sm btn-outline-danger mb-2" data-toggle="tooltip" data-placement="top" title="If you are using this application for the first time, click the button to input total number of chickens in cold room first, before using cold room in">Total Chicken In Coldroom</a>
+                                <form method="post">
+                                    {%csrf_token%}
+                                    <label>Total Chicken in Freeze</label>
+                                <div class="form-group">
+                                    <input
+                                     value="{{total2}}"
+                                    type="number"
+                                    class="form-control p-2 mb-3"
+                                    name="total2"
+                                    readonly
+                                    />
+                            </div>
+                                     {{form|crispy}}
+                                    <div class="d-grid">
+                                    <button type="submit" class="btn btn-danger btn-block rounded-pill my-3">Submit</button>
+                                        </div>
+                                </form>
+
+
+      <hr class="text-danger">
+
+       <form method="get" class="d-flex align-self-right">
+              {%csrf_token%}
+          <div class="form-group">
+           <label for="date"><h4>Search</h4></label>
+            <input type="date" class="form-control" name="date"  id="date" required>
+
+            <div>
+            <button type="submit" class="btn au-btn btn-sm btn-danger rounded-pill my-2">filter</button>
+             </div>
+               </div>
+            </form>
+
+                                <div class="row">
+  <div class="col-12">
+
+
+  {%if queryset and date%}
+
+   <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Total Chickens In Freezer</th>
+       <th scope="col">Date</th>
+
+
+    </tr>
+  <hr class="text-danger">
+  </thead>
+  <tbody>
+   {%for rows in queryset%}
+    <tr>
+       <td>{{rows.id}}</td>
+       <td>{{rows.chickens_in_freezer}}</td>
+       <td>{{rows.date}}</td>
+
+
+
+    </tr>
+    {%endfor%}
+
+  </tbody>
+</table>
+</div>
+     <div class="col-md-4">
+   <div class="overview-wrap">
+      <h2 class="title-1"></h2>
+
+
+ </div>
+    </div>
+<div>
+      <a href="{%url 'coldroom_in_b'%}" class="btn au-btn btn-sm btn-danger rounded-pill my-3">Refresh</a>
+
+
+</div>
+  </div>
+      {%elif queryset.count == 0%}
+
+   <h3 class="my-2">No Data Found</h3>
+
+
+<div class="col-md-2">
+      <a href="{%url 'coldroom_in_b'%}" class="btn au-btn btn-sm btn-danger rounded-pill my-3">Refresh</a>
+</div>
+
+{%else%}
+
+   <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Total Chickens In Freezer</th>
+       <th scope="col">Date</th>
+
+
+    </tr>
+  <hr class="text-danger">
+  </thead>
+  <tbody>
+   {%for rows in total%}
+    <tr>
+       <td>{{rows.id}}</td>
+       <td>{{rows.chickens_in_freezer}}</td>
+       <td>{{rows.date}}</td>
+
+
+
+    </tr>
+    {%endfor%}
+
+  </tbody>
+</table>
+</div>
+
+
+
+ </div>
+    </div>
+
+</div>
+  </div>
+{%endif%}
+
+
+
+{%endblock%}

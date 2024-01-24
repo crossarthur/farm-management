@@ -1,0 +1,164 @@
+{%extends 'poultry_b/base_b.html'%}
+{%load crispy_forms_tags%}
+{%block head%}Production{%endblock%}
+
+{%block content%}
+
+
+
+
+
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-8 offset-2">
+
+                            <div>{%include 'poultry/message.html'%}</div>
+                              <h1>Production
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-building-check text-danger" viewBox="0 0 16 16">
+                                  <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514Z"/>
+                                  <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z"/>
+                                  <path d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+                                </svg>
+
+                              </h1>
+                            <div class="my-2">{%if imprest > 0%}</div>
+                                <form method="post">
+                                    {%csrf_token%}
+                                     {{form|crispy}}
+                                    <div class="d-grid">
+                                    <button type="submit" class="btn btn-danger btn-block rounded-pill my-3">Submit</button>
+                                        </div>
+                                </form>
+
+      <hr class="text-danger">
+
+       <form method="get" class="d-flex align-self-right">
+              {%csrf_token%}
+          <div class="form-group">
+           <label for="date"><h4>Search</h4></label>
+            <input type="date" class="form-control" name="date"  id="date" required>
+
+            <div>
+            <button type="submit" class="btn au-btn btn-sm btn-danger rounded-pill my-2">Filter</button>
+             </div>
+               </div>
+            </form>
+
+          {%else%}
+           <div class="alert alert-danger">Insufficient Balance Add <a href="{%url 'total_imprest_b'%}">Imprest</a></div>
+         {%endif%}
+
+                                <div class="row">
+  <div class="col-12">
+
+
+  {%if queryset and date%}
+
+   <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Production Description</th>
+       <th scope="col">Production Cost</th>
+       <th scope="col">Date</th>
+        {%if user.is_superuser%}
+         <th scope="col">Action</th>
+        {%endif%}
+
+
+    </tr>
+  <hr class="text-danger">
+  </thead>
+  <tbody>
+   {%for rows in queryset%}
+    <tr>
+       <td>{{rows.id}}</td>
+       <td>{{rows.production_description}}</td>
+        <td>₦{{rows.production_cost}}</td>
+       <td>{{rows.date|date:"D d M"}}</td>
+        {%if user.is_superuser%}
+        <td><a href="{%url 'delete_production_b' rows.id%}" class="btn btn-sm btn-danger rounded-pill">Delete</a></td>
+         {%endif%}
+
+
+
+    </tr>
+    {%endfor%}
+
+  </tbody>
+</table>
+</div>
+     <div class="col-md-4">
+   <div class="overview-wrap">
+      <h2 class="title-1"></h2>
+
+
+ </div>
+    </div>
+<div>
+      <a href="{%url 'production_b'%}" class="btn au-btn btn-sm btn-danger rounded-pill my-3">Refresh</a>
+
+
+</div>
+  </div>
+      {%elif queryset.count == 0%}
+
+   <h3 class="my-2">No Data Found</h3>
+
+
+<div class="col-md-2">
+      <a href="{%url 'production_b'%}" class="btn au-btn btn-sm btn-danger rounded-pill my-3">Refresh</a>
+</div>
+
+{%else%}
+
+   <table class="table">
+  <thead class="thead-dark">
+    <tr>
+     <th scope="col">#</th>
+      <th scope="col">Production Description</th>
+       <th scope="col">Production Cost</th>
+       <th scope="col">Date</th>
+        {%if user.is_superuser%}
+         <th scope="col">Action</th>
+        {%endif%}
+
+
+    </tr>
+  <hr class="text-danger">
+  </thead>
+  <tbody>
+   {%for rows in total%}
+    <tr>
+        <td>{{rows.id}}</td>
+       <td>{{rows.production_description}}</td>
+        <td>₦{{rows.production_cost}}</td>
+       <td>{{rows.date|date:"D d M"}}</td>
+        {%if user.is_superuser%}
+        <td><a href="{%url 'delete_production_b' rows.id%}" class="btn btn-sm btn-danger rounded-pill">Delete</a></td>
+         {%endif%}
+
+
+
+
+    </tr>
+    {%endfor%}
+
+  </tbody>
+</table>
+</div>
+
+
+
+ </div>
+    </div>
+
+</div>
+  </div>
+{%endif%}
+
+
+
+
+
+{%endblock%}

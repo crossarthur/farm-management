@@ -1,0 +1,29 @@
+{%extends 'poultry_b/base_b.html'%}
+
+{%load crispy_forms_tags%}
+{%block head%}Delete Models{%endblock%}
+
+{%block content%}
+
+
+<  <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-8 offset-2">
+         <h1 class="text-center mb-3">End Batch?</h1>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+         <form method="post">
+        {% csrf_token %}
+             <p class="alert alert-danger">Click Reset to Confirm<button type="submit" class="btn btn-danger btn-sm mx-2">Reset</button> <a href="{%url 'logout'%}"><button class="btn btn-primary btn-sm">Logout</button></a></p>
+
+    </form>
+    </div>
+</div>
+
+
+
+{%endblock%}

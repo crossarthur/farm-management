@@ -1,0 +1,996 @@
+{%extends 'poultry_b/base_b.html'%}
+{%if user.is_authenticated%}
+hello
+{%else%}
+
+
+{%load crispy_forms_tags%}
+{%block head%}Home{%endblock%}
+
+{%block content%}
+
+                                       <div class="row">
+                                    <div class="col-2">
+                                        <div class="my-2"><h3>Dashboard | Batch B</h3></div>
+                                    </div>
+
+
+                                           <div class="dropdown">
+                                      <a class="au-btn btn btn-danger btn-sm rounded-pill dropdown-toggle my-1" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="zmdi zmdi-plus my-2"></i>add item
+                                      </a>
+
+
+                                         {%if total_chicken_num == None%}
+                                         <a class="au-btn btn btn-danger btn-sm rounded-pill my-3" href="{%url 'add_b'%}" role="button" aria-expanded="false">
+                                        <i class="zmdi zmdi-plus"></i>add Chickens
+                                      </a>
+                                        {%endif%}
+
+
+                                            {%if imprest == None%}
+                                         <a class="au-btn btn btn-danger btn-sm rounded-pill" href="{%url 'total_imprest_b'%}" role="button" aria-expanded="false">
+                                        <i class="zmdi zmdi-plus my-2"></i>first imprest
+                                      </a>
+                                        {%endif%}
+
+
+
+                                      <a class="au-btn btn btn-danger btn-sm rounded-pill" href="{%url 'notepad_b'%}" role="button">
+                                        <i class="fa fa-list-alt my-2 mx-1" aria-hidden="true"></i>add note
+                                      </a>
+
+                                        <a href="{% url 'delete_models_b' %}" class="au-btn btn btn-dark btn-sm rounded-pill my-2" onclick="return confirmDelete();"><i class="fa fa-trash text-light mx-1" aria-hidden="true"></i>End Batch</a>
+
+
+
+
+
+
+<script>
+    function confirmDelete() {
+        if (confirm("Are you sure you want to RESET THIS BATCH, IT CAN'T BE UNDONE")) {
+            return true; // Proceed with the deletion
+        } else {
+            return false; // Cancel the deletion
+        }
+    }
+</script>
+
+
+
+
+                                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <li><a class="dropdown-item" href="{%url 'chicken_b'%}">Chicken In</a></li>
+                                        <li><a class="dropdown-item" href="{%url 'chickens_out_b'%}">Chicken Out</a></li>
+                                        <li><a class="dropdown-item" href="{%url 'chickens_slaughtered_b'%}">Chicken Slaughtered</a></li>
+                                        <li><a class="dropdown-item" href="{%url 'chickens_mortality_b'%}">Chicken Mortality</a></li>
+                                        <li><a class="dropdown-item" href="{%url 'coldroom_in_b'%}">Cold Room In</a></li>
+                                          <li><a class="dropdown-item" href="{%url 'drugs_b'%}">Drugs</a></li>
+                                        <li><a class="dropdown-item" href="{%url 'feed_b'%}">Feed</a></li>
+                                        <li><a class="dropdown-item" href="{%url 'necessities_b'%}">Necessities</a></li>
+                                        <li><a class="dropdown-item" href="{%url 'production_b'%}">Production</a></li>
+                                      </ul>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+  </div>
+                        <div class="row m-t-25">
+
+                         <div class="my-2">{%include 'poultry/message.html'%}</div>
+
+                             <div class="col-sm-6 col-lg-3">
+                                <div class="overview-item overview-item--c1">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="icon">
+
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-wallet-fill text-light" viewBox="0 0 16 16">
+                                                  <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v2h6a.5.5 0 0 1 .5.5c0 .253.08.644.306.958.207.288.557.542 1.194.542.637 0 .987-.254 1.194-.542.226-.314.306-.705.306-.958a.5.5 0 0 1 .5-.5h6v-2A1.5 1.5 0 0 0 14.5 2z"/>
+                                                  <path d="M16 6.5h-5.551a2.678 2.678 0 0 1-.443 1.042C9.613 8.088 8.963 8.5 8 8.5c-.963 0-1.613-.412-2.006-.958A2.679 2.679 0 0 1 5.551 6.5H0v6A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5z"/>
+                                                </svg>
+
+                                            </div>
+                                            <div class="text">
+                                                <h2>₦{{profs}}<h2>
+                                                    <span><span><h4 class="text-light"><b>Farm Income</b></h4></span></span>
+                                            </div>
+                                        </div>
+                                        <div class="overview-chart">
+
+
+
+                                                <div>
+                                                      <canvas id="myChart12"></canvas>
+                                                    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx12 = document.getElementById('myChart12');
+
+  new Chart(ctx12, {
+    type: 'line',
+    data: {
+     labels: [{%for row in graph_income%}'{{row.week}}',{%endfor%}],
+      datasets: [{
+        label: 'Total Chickens Weekly',
+        data: [{%for row in graph_income%}'{{row.sum}}',{%endfor%}],
+        fill: false,
+        backgroundColor: ['orange', 'black', 'red', 'green', 'blue', 'gold','navy','pink','brown','purple','yellow','fuchsia'],
+        color: 'white',
+        borderWidth: 3,
+
+      }]
+    },
+   options: {
+        color: 'white',
+    animations: {
+      tension: {
+        duration: 1000,
+        easing: 'linear',
+        from: 1,
+        to: 0,
+        loop: true
+      }
+    },
+    scales: {
+        x: {
+        ticks:{
+        color: 'white'
+        }
+      },
+      y: { // defining min and max so hiding the dataset does not change scale range
+          ticks:{
+          color: 'white'
+          },
+      }
+    }
+  }
+});
+</script>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                             <div class="col-sm-6 col-lg-3">
+                                <div class="overview-item overview-item--c1">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="icon">
+
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-wallet2 text-light" viewBox="0 0 16 16">
+                                                              <path d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499L12.136.326zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                                                            </svg>
+                                            </div>
+                                            <div class="text">
+                                                <h2>₦{{expenditure}}<h2>
+                                                    <span><h4 class="text-light"><b>Farm Expenditure</b></h4></span>
+                                            </div>
+                                        </div>
+                                        <div class="overview-chart">
+
+                                    <p class="text-light">{%if pro > fee and pro > dru and pro > nec%} Production Cost - <i class="fa fa-arrow-up text-danger" aria-hidden="true"></i> {%elif fee > pro and fee > dru and fee > nec %} Feed Cost - <i class="fa fa-arrow-up text-danger" aria-hidden="true"></i>  {%elif dru > pro and dru > fee and dru > nec %} Drugs Cost - <i class="fa fa-arrow-up text-danger" aria-hidden="true"></i>  {%elif nec > pro and nec > dru and nec > fee %} Necessities Cost <i class="fa fa-arrow-up text-danger" aria-hidden="true"></i> {%endif%}</p>
+                                              <p class="text-light">{%if pro < fee and pro < dru and pro < nec%} Production Cost - <i class="fa fa-arrow-down text-light" aria-hidden="true"></i> {%elif fee < pro and fee < dru and fee < nec %} Feed Cost - <i class="fa fa-arrow-down text-light" aria-hidden="true"></i>  {%elif dru < pro and dru < fee and dru < nec %} Drugs Cost - <i class="fa fa-arrow-down text-light" aria-hidden="true"></i>  {%elif nec < pro or nec < dru or nec < fee or nec < pro %} Necessities Cost - <i class="fa fa-arrow-down text-light" aria-hidden="true"></i> {%endif%}</p>
+
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                             <div class="col-sm-6 col-lg-3">
+                                <div class="overview-item overview-item--c1">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="icon">
+                                               <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-cash-stack text-light" viewBox="0 0 16 16">
+                                                  <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                                                  <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
+                                                </svg>
+                                            </div>
+                                            <div class="text">
+
+                                                <div><h2>₦{{cal}}<h2>
+                                                <h4 class="text-light">Income Statement</h4>
+                                                </div>
+
+                                                    <span>{%if cal > 0%}<span><p class="text-light">Profit - <i class="fa fa-arrow-up text-white" aria-hidden="true"></i></p></span>{%else%}<span><p class="text-light">Loss - <i class="fa fa-arrow-down text-danger" aria-hidden="true"></i></b></p></span>{%endif%}</span>
+                                            </div>
+                                        </div>
+                                        <div class="overview-chart">
+
+                                         <div class="chart-info__right">
+                                                <div class="chart-statis">
+                                                    <span class="e text-warning">
+
+
+
+                                                </div>
+
+                                                <div class="chart-statis mr-0">
+                                                    <span class="index decre">
+
+
+
+                                                </div>
+                                            </div>
+
+                                                <div>
+                                                      <canvas id="myChart30"></canvas>
+                                                    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx30 = document.getElementById('myChart');
+
+  new Chart(ctx30, {
+    type: 'line',
+    data: {
+     labels: [{%for row in prof%}'{{row.week}}',{%endfor%}],
+      datasets: [{
+        label: 'Profit Weekly',
+        data: [{%for row in prof%}'{{row.sum}}',{%endfor%}],
+        fill: false,
+        backgroundColor: ['orange', 'black', 'red', 'green', 'blue', 'gold','navy','pink','brown','purple','yellow','fuchsia'],
+        color: 'white',
+        borderWidth: 3,
+
+      }]
+    },
+   options: {
+        color: 'white',
+    animations: {
+      tension: {
+        duration: 1000,
+        easing: 'linear',
+        from: 1,
+        to: 0,
+        loop: true
+      }
+    },
+    scales: {
+        x: {
+        ticks:{
+        color: 'white'
+        }
+      },
+      y: { // defining min and max so hiding the dataset does not change scale range
+          ticks:{
+          color: 'white'
+          },
+      }
+    }
+  }
+});
+</script>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="overview-item overview-item--c1">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-feather text-light" viewBox="0 0 16 16">
+                                              <path d="M15.807.531c-.174-.177-.41-.289-.64-.363a3.765 3.765 0 0 0-.833-.15c-.62-.049-1.394 0-2.252.175C10.365.545 8.264 1.415 6.315 3.1c-1.95 1.686-3.168 3.724-3.758 5.423-.294.847-.44 1.634-.429 2.268.005.316.05.62.154.88.017.04.035.082.056.122A68.362 68.362 0 0 0 .08 15.198a.528.528 0 0 0 .157.72.504.504 0 0 0 .705-.16 67.606 67.606 0 0 1 2.158-3.26c.285.141.616.195.958.182.513-.02 1.098-.188 1.723-.49 1.25-.605 2.744-1.787 4.303-3.642l1.518-1.55a.528.528 0 0 0 0-.739l-.729-.744 1.311.209a.504.504 0 0 0 .443-.15c.222-.23.444-.46.663-.684.663-.68 1.292-1.325 1.763-1.892.314-.378.585-.752.754-1.107.163-.345.278-.773.112-1.188a.524.524 0 0 0-.112-.172ZM3.733 11.62C5.385 9.374 7.24 7.215 9.309 5.394l1.21 1.234-1.171 1.196a.526.526 0 0 0-.027.03c-1.5 1.789-2.891 2.867-3.977 3.393-.544.263-.99.378-1.324.39a1.282 1.282 0 0 1-.287-.018Zm6.769-7.22c1.31-1.028 2.7-1.914 4.172-2.6a6.85 6.85 0 0 1-.4.523c-.442.533-1.028 1.134-1.681 1.804l-.51.524-1.581-.25Zm3.346-3.357C9.594 3.147 6.045 6.8 3.149 10.678c.007-.464.121-1.086.37-1.806.533-1.535 1.65-3.415 3.455-4.976 1.807-1.561 3.746-2.36 5.31-2.68a7.97 7.97 0 0 1 1.564-.173Z"/>
+                                            </svg>
+                                            </div>
+                                            <div class="text">
+                                                <h2>{{total_chicken_num}}<h2>
+                                                    <span><span><h4 class="text-light"><b>Number of Chickens</b></h4></span></span>
+                                            </div>
+                                        </div>
+                                        <div class="overview-chart">
+
+
+
+                                                <div>
+                                                      <canvas id="myChart11"></canvas>
+                                                    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx11 = document.getElementById('myChart11');
+
+  new Chart(ctx11, {
+    type: 'line',
+    data: {
+     labels: [{%for row in prnts%}'{{row.week}}',{%endfor%}],
+      datasets: [{
+        label: 'Total Chicken Weekly',
+        data: [{%for row in prnts%}'{{row.sum}}',{%endfor%}],
+        fill: false,
+        backgroundColor: ['orange', 'black', 'red', 'green', 'blue', 'gold','navy','pink','brown','purple','yellow','fuchsia'],
+        color: 'white',
+        borderWidth: 3,
+
+      }]
+    },
+   options: {
+        color: 'white',
+    animations: {
+      tension: {
+        duration: 1000,
+        easing: 'linear',
+        from: 1,
+        to: 0,
+        loop: true
+      }
+    },
+    scales: {
+        x: {
+        ticks:{
+        color: 'white'
+        }
+      },
+      y: { // defining min and max so hiding the dataset does not change scale range
+          ticks:{
+          color: 'white'
+          },
+      }
+    }
+  }
+});
+</script>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+
+                                <div class="overview-item overview-item--c2">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-cash-stack text-light" viewBox="0 0 16 16">
+                                              <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                                              <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
+                                            </svg>
+                                            </div>
+                                            <div class="text">
+                                                <h2><b>₦{{feed_total}}</b></h2>
+                                                <span>Cost of Feed</span>
+                                            </div>
+                                        </div>
+                                        <div class="overview-chart">
+
+
+                                            <div>
+                                                      <canvas id="myChart1"></canvas>
+                                                    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx1 = document.getElementById('myChart1');
+
+  new Chart(ctx1, {
+    type: 'line',
+    data: {
+     labels: [{%for row in feed%}'{{row.week}}',{%endfor%}],
+      datasets: [{
+        label: 'Cost Weekly',
+        data: [{%for row in feed%}'{{row.sum}}',{%endfor%}],
+        fill: false,
+        backgroundColor: ['orange', 'black', 'red', 'green', 'blue', 'gold','navy','pink','brown','purple','yellow','fuchsia'],
+        color: 'white',
+        borderWidth: 3,
+
+      }]
+    },
+   options: {
+        color: 'white',
+    animations: {
+      tension: {
+        duration: 1000,
+        easing: 'linear',
+        from: 1,
+        to: 0,
+        loop: true
+      }
+    },
+    scales: {
+      x: {
+        ticks:{
+        color: 'white'
+        }
+      },
+      y: { // defining min and max so hiding the dataset does not change scale range
+          ticks:{
+          color: 'white'
+          },
+      }
+    }
+  }
+});
+</script>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="overview-item overview-item--c2">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-capsule text-light" viewBox="0 0 16 16">
+                                              <path d="M1.828 8.9 8.9 1.827a4 4 0 1 1 5.657 5.657l-7.07 7.071A4 4 0 1 1 1.827 8.9Zm9.128.771 2.893-2.893a3 3 0 1 0-4.243-4.242L6.713 5.429z"/>
+                                            </svg>
+                                            </div>
+                                            <div class="text">
+                                                <h2>₦{{drugs_total}}</h2>
+                                                <span>Cost of Drugs</span>
+                                            </div>
+                                        </div>
+                                        <div class="overview-chart">
+
+
+                                            <div>
+                                                      <canvas id="myChart2"></canvas>
+                                                    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx2 = document.getElementById('myChart2');
+
+  new Chart(ctx2, {
+    type: 'line',
+    data: {
+     labels: [{%for row in drugs%}'{{row.week}}',{%endfor%}],
+      datasets: [{
+        label: 'Cost Weekly',
+        data: [{%for row in drugs%}'{{row.sum}}',{%endfor%}],
+        fill: false,
+        backgroundColor: ['orange', 'black', 'red', 'green', 'blue', 'gold','navy','pink','brown','purple','yellow','fuchsia'],
+        color: 'white',
+        borderWidth: 3,
+
+      }]
+    },
+   options: {
+        color: 'white',
+    animations: {
+      tension: {
+        duration: 1000,
+        easing: 'linear',
+        from: 1,
+        to: 0,
+        loop: true
+      }
+    },
+    scales: {
+      x: {
+        ticks:{
+        color: 'white'
+        }
+      },
+      y: { // defining min and max so hiding the dataset does not change scale range
+          ticks:{
+          color: 'white'
+          },
+      }
+    }
+  }
+});
+</script>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                              <div class="col-sm-6 col-lg-3">
+
+                                <div class="overview-item overview-item--c2">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="icon">
+                                                <i class="fa fa-calculator my-2"></i>
+                                            </div>
+                                            <div class="text">
+                                                <h2><b>₦{{nec}}</b></h2>
+                                                <span>Cost Necessities</span>
+                                            </div>
+                                        </div>
+                                        <div class="overview-chart">
+                                             <div>
+                                                      <canvas id="myChart20"></canvas>
+                                                    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx20 = document.getElementById('myChart20');
+
+  new Chart(ctx20, {
+    type: 'line',
+    data: {
+     labels: [{%for row in necs%}'{{row.week}}',{%endfor%}],
+      datasets: [{
+        label: 'Cost Weekly',
+        data: [{%for row in necs%}'{{row.sum}}',{%endfor%}],
+        fill: false,
+        backgroundColor: ['orange', 'black', 'red', 'green', 'blue', 'gold','navy','pink','brown','purple','yellow','fuchsia'],
+        color: 'white',
+        borderWidth: 3,
+
+      }]
+    },
+   options: {
+        color: 'white',
+    animations: {
+      tension: {
+        duration: 1000,
+        easing: 'linear',
+        from: 1,
+        to: 0,
+        loop: true
+      }
+    },
+    scales: {
+      x: {
+        ticks:{
+        color: 'white'
+        }
+      },
+      y: { // defining min and max so hiding the dataset does not change scale range
+          ticks:{
+          color: 'white'
+          },
+      }
+    }
+  }
+});
+</script>
+
+>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                              <div class="col-sm-6 col-lg-3">
+
+                                <div class="overview-item overview-item--c2">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="icon">
+                                                <i class="fa fa-calculator my-2"></i>
+                                            </div>
+                                            <div class="text">
+                                                <h2><b>₦{{pro}}</b></h2>
+                                                <span>Cost of Production</span>
+                                            </div>
+                                        </div>
+                                        <div class="overview-chart">
+
+
+                                                                                    <div>
+                                                      <canvas id="myChart21"></canvas>
+                                                    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx21 = document.getElementById('myChart21');
+
+  new Chart(ctx21, {
+    type: 'line',
+    data: {
+     labels: [{%for row in pros%}'{{row.week}}',{%endfor%}],
+      datasets: [{
+        label: 'Cost Weekly',
+        data: [{%for row in pros%}'{{row.sum}}',{%endfor%}],
+        fill: false,
+        backgroundColor: ['orange', 'black', 'red', 'green', 'blue', 'gold','navy','pink','brown','purple','yellow','fuchsia'],
+        color: 'white',
+        borderWidth: 3,
+
+      }]
+    },
+   options: {
+        color: 'white',
+    animations: {
+      tension: {
+        duration: 1000,
+        easing: 'linear',
+        from: 1,
+        to: 0,
+        loop: true
+      }
+    },
+    scales: {
+      x: {
+        ticks:{
+        color: 'white'
+        }
+      },
+      y: { // defining min and max so hiding the dataset does not change scale range
+          ticks:{
+          color: 'white'
+          },
+      }
+    }
+  }
+});
+</script>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="au-card recent-report">
+                                    <div class="au-card-inner">
+                                        <h3 class="title-2">Income Statistics</h3>
+                                        <div class="chart-info">
+                                            <div class="chart-info__left">
+                                                <div class="chart-note">
+
+                                                </div>
+                                                <div class="chart-note mr-0">
+                                                <span class=""></span>
+                                                        <span>Cost Weekly</span>
+                                                </div>
+                                            </div>
+                                            <div class="chart-info__right">
+                                                <div class="chart-statis">
+
+                                                </div>
+                                                <div class="chart-statis mr-0">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="recent-report__chart">
+
+
+                                                     <div>
+                                                      <canvas id="myChart131"></canvas>
+                                                    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx131 = document.getElementById('myChart131');
+
+  new Chart(ctx131, {
+    type: 'doughnut',
+    data: {
+     labels: [{%for row in graph_income%}'{{row.week}}',{%endfor%}],
+      datasets: [{
+        label: 'Income Weekly',
+        data: [{%for row in graph_income%}'{{row.sum}}',{%endfor%}],
+        fill: false,
+        backgroundColor: ['orange', 'black', 'red', 'green', 'blue', 'gold','navy','pink','brown','purple','yellow','fuchsia'],
+        color: 'black',
+        borderWidth: 3,
+
+      }]
+    },
+   options: {
+        color: 'black',
+    animations: {
+      tension: {
+        duration: 1000,
+        easing: 'linear',
+        from: 1,
+        to: 0,
+        loop: true
+      }
+    },
+    scales: {
+        x: {
+        ticks:{
+        color: 'black'
+        }
+      },
+      y: { // defining min and max so hiding the dataset does not change scale range
+          ticks:{
+          color: 'black'
+          },
+      }
+    }
+  }
+});
+</script>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="au-card chart-percent-card">
+                                    <div class="au-card-inner">
+                                        <h3 class="title-2 tm-b-5">Profit/Loss Statistics</h3>
+                                        <div class="row no-gutters">
+                                            <div class="col-xl-6">
+                                                <div class="chart-note-wrap">
+                                                    <div class="chart-note mr-0 d-block">
+
+                                                         <span>{%if cal > 0%}<span><h4 class="text-success">Profit - <i class="fa fa-arrow-up text-success" aria-hidden="true"></i></h4></span>{%else%}<span><h4 class="text-danger">Loss - <i class="fa fa-arrow-down text-danger" aria-hidden="true"></i></b></h4></span>{%endif%}</span>
+                                                    </div>
+                                                    <div class="chart-note mr-0 d-block">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 offset-12">
+                                                <div class="percent-chart">
+
+
+                                                                                                         <div>
+                                                      <canvas id="myChart13"></canvas>
+                                                    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx13 = document.getElementById('myChart13');
+
+  new Chart(ctx13, {
+    type: 'line',
+    data: {
+     labels: [{%for row in prof%}'{{row.week}}',{%endfor%}],
+      datasets: [{
+        label: 'Statement Weekly',
+        data: [{%for row in prof%}'{{row.sum}}',{%endfor%}],
+        fill: false,
+        backgroundColor: ['orange', 'black', 'red', 'green', 'blue', 'gold','navy','pink','brown','purple','yellow','fuchsia'],
+        color: 'black',
+        borderWidth: 5,
+
+      }]
+    },
+   options: {
+        color: 'black',
+    animations: {
+      tension: {
+        duration: 1000,
+        easing: 'linear',
+        from: 1,
+        to: 0,
+        loop: true
+      }
+    },
+    scales: {
+        x: {
+        ticks:{
+        color: 'black'
+        }
+      },
+      y: { // defining min and max so hiding the dataset does not change scale range
+          ticks:{
+          color: 'black'
+          },
+      }
+    }
+  }
+});
+</script>
+
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h2 class="title-1 m-b-25">Income Earning</h2>
+
+                                    <table class="table table-danger table-sm">
+                                        <thead>
+
+                                            <tr>
+                                                <th class="text-danger">Date</th>
+                                                <th class="text-danger">Customer</th>
+                                                <th class="text-danger">Sold</th>
+                                                <th class="text-danger">Kilo</th>
+                                                <th class="text-danger">Cost Per Kilo</th>
+                                                <th class="text-danger">Total</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+
+
+                                            <tr>
+                                                {%for rows in overview|slice:":6"%}
+                                                {%if rows.chicken_out == 0%}
+                                               {{rows.is_hidden}}
+                                                {%else%}
+                                                    <td>{{rows.date|date:"D d M Y"}}</td>
+                                                {%endif%}
+
+                                                 {%if rows.chicken_out == 0%}
+                                                    {{rows.is_hidden}}
+                                                    {%else%}
+                                                        <td>{{rows.customer}}</td>
+                                                    {%endif%}
+
+                                                {%if rows.chicken_out == 0%}
+                                               {{rows.is_hidden}}
+                                                {%else%}
+                                                    <td>{{rows.chicken_out}}</td>
+                                                {%endif%}
+
+                                                {%if rows.chicken_out == 0%}
+                                                {{rows.is_hidden}}
+                                                {%else%}
+                                                    <td>{{rows.chicken_out_kilogram}}KG</td>
+                                                {%endif%}
+                                                 {%if rows.chicken_out == 0%}
+                                                {{rows.is_hidden}}
+                                                {%else%}
+                                                    <td>₦{{rows.chicken_out_unit_price}}</td>
+                                                {%endif%}
+                                               {%if rows.chicken_out == 0%}
+                                                        {{rows.is_hidden}}
+                                                        {%else%}
+                                                            <td>₦{{rows.chicken_out_total_cost}}</td>
+                                                        {%endif%}
+
+                                            </tr>
+
+                                           {%endfor%}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            <div class="col-md-3">
+                                <h2 class="title-1 m-b-30"> Rating </h2>
+
+                                        <div class="table-responsive table--no-card bg-dark">
+                                            <table class="table table-danger ">
+                                                <tbody>
+                                                    <tr>
+                                                        <td><h5 class="text-danger">Top Customer</h5></td>
+
+
+                                                        <td class="text-dark"><h4 class="text-center ml-2">{{user_value}}</h4></td>
+                                                    </tr>
+                                                    <tr>
+
+                                                         <tr>
+                                                        <td><h5 class="text-danger">Top Occurrence</h5></td>
+
+
+                                                        <td class="text-dark"><h4 class="text-center ml-2">{{user_count}}</h4></td>
+                                                    </tr>
+
+                                                 <tr>
+                                                        <td><h5 class="text-danger">Top Drugs</h5></td>
+
+
+                                                        <td class="text-dark"><h4 class="text-center ml-2">{{drug_value}}</h4></td>
+                                                    </tr>
+
+                                                <tr>
+                                                        <td><h5 class="text-danger">Top Feed</h5></td>
+
+
+                                                        <td class="text-dark"><h4 class="text-center ml-2">{{feed_value}}</h4></td>
+                                                    </tr>
+
+                                                 <tr>
+                                                        <td><h5 class="text-danger">Top Necessities</h5></td>
+
+
+                                                        <td class="text-dark"><h4 class="text-center ml-2">{{nec_value}}</h4></td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                                                              </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+                                            {%endblock%}
+{%endif%}
+                                            <div class="au-chat-textfield">
+                                                <form class="au-form-icon">
+                                                    <input class="au-input au-input--full au-input--h65" type="text" placeholder="Type a message">
+                                                    <button class="au-input-icon">
+                                                        <i class="zmdi zmdi-camera"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="copyright">
+                                    <p>Copyright © 2023 Arthur. All rights reserved Nakakaaki Farms</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+
+    </div>
+
+    <!-- Jquery JS-->
+    <script src="/static/vendor/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap JS-->
+    <script src="/static/vendor/bootstrap-4.1/popper.min.js"></script>
+    <script src="/static/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+    <!-- Vendor JS       -->
+    <script src="/static/vendor/slick/slick.min.js">
+    </script>
+    <script src="/static/vendor/wow/wow.min.js"></script>
+    <script src="/static/vendor/animsition/animsition.min.js"></script>
+    <script src="/static/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+    </script>
+    <script src="/static/vendor/counter-up/jquery.waypoints.min.js"></script>
+    <script src="/static/vendor/counter-up/jquery.counterup.min.js">
+    </script>
+    <script src="/static/vendor/circle-progress/circle-progress.min.js"></script>
+    <script src="/static/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/static/vendor/chartjs/Chart.bundle.min.js"></script>
+    <script src="/static/vendor/select2/select2.min.js">
+    </script>
+
+    <!-- Main JS-->
+    <script src="/static/js/main.js"></script>
+
+
+
+<!-- end document-->
+

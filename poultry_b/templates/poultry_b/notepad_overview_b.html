@@ -1,0 +1,149 @@
+{%extends 'poultry_b/base_b.html'%}
+
+{%load crispy_forms_tags%}
+{%block head%}Notepad Overview{%endblock%}
+
+{%block content%}
+
+
+
+
+ <div class="container-fluid">
+
+ <div class="row">
+  <div class="col-md-8 offset-2">
+      <hr class="text-danger">
+      <div class="row">
+          <div class="my-2">{%include 'poultry/message.html'%}</div>
+          <div class="col-7">
+
+               <h3>Notepad Overview
+      <i>
+               <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-journal-text text-danger" viewBox="0 0 16 16">
+                                  <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5"/>
+                                  <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/>
+                                  <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/>
+                                </svg>
+      </i>
+               </h3>
+
+          </div>
+
+      </div>
+
+
+      </h1>
+
+
+
+
+   {%if queryset and date%}
+      <div>{%include 'poultry/message.html'%}</div>
+   <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Note</th>
+       <th scope="col">Date</th>
+
+
+
+    </tr>
+  <hr class="text-danger">
+  </thead>
+  <tbody>
+   {%for rows in queryset%}
+    <tr>
+      {% autoescape off %}
+       <td>{{rows.id}}</td>
+       <td>{{rows.title}}</td>
+        <td>{{rows.note|slice:":30"|safe}}</td>
+       <td>{{rows.date}}</td>
+        {% endautoescape %}
+
+
+
+
+    </tr>
+    {%endfor%}
+
+  </tbody>
+</table>
+</div>
+     <div class="col-md-4">
+   <div class="overview-wrap">
+      <h2 class="title-1"></h2>
+      <a href="{%url 'notepad_b'%}"><button class="btn au-btn btn-sm btn-danger rounded-pill my-3">
+      <i class="zmdi zmdi-plus"></i>add note</button></a>
+
+ </div>
+    </div>
+     <div class="col-md-2">
+      <a href="{%url 'notepad_overview_b'%}" class="btn au-btn btn-sm btn-danger rounded-pill my-3">Refresh</a>
+         </div>
+
+</div>
+  </div>
+      {%elif queryset.count == 0%}
+
+   <h3 class="my-2">No Data Found</h3>
+
+
+<div class="col-md-2">
+      <a href="{%url 'notepad_overview_b'%}" class="btn au-btn btn-sm btn-danger rounded-pill my-3">Refresh</a>
+</div>
+
+{%else%}
+
+   <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Note</th>
+       <th scope="col">Date</th>
+        <th scope="col">Action</th>
+
+
+
+
+    </tr>
+  <hr class="text-danger">
+  </thead>
+  <tbody>
+   {%for rows in note%}
+    <tr>
+        {% autoescape off %}
+       <td>{{rows.id}}</td>
+       <td>{{rows.title}}</td>
+        <td>{{rows.note|slice:":10"|safe}}</td>
+       <td>{{rows.date|date:"D d M"}}</td>
+        <td><a href="{%url 'notepad_detail_b' rows.id%}" class="btn btn-sm btn-primary rounded-pill">View Detail</a>
+        <a href="{%url 'notepad_delete_b' rows.id%}" class="btn btn-sm btn-danger rounded-pill">Delete</a></td>
+        {% endautoescape %}
+
+
+
+
+
+    </tr>
+    {%endfor%}
+
+  </tbody>
+</table>
+</div>
+     <div class="col-md-4">
+   <div class="overview-wrap">
+      <h2 class="title-1"></h2>
+      <a href="{%url 'notepad_b'%}"><button class="btn au-btn btn-sm btn-danger rounded-pill my-3">
+      <i class="zmdi zmdi-plus"></i>add note</button></a>
+
+ </div>
+    </div>
+
+</div>
+  </div>
+{%endif%}
+
+{%endblock%}
