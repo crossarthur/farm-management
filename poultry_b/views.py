@@ -698,6 +698,14 @@ def necessities_overview_b(request):
         return render(request, 'poultry_b/necessities_overview_b.html', context)
 
 
+def delete_necessities_b(request, id):
+    delete2 = Necessities_b.objects.get(pk=id)
+    imprest = Imprest_b.objects.values_list('total_imprest', flat=True).last()
+
+    delete2.delete()
+    return redirect('necessities_overview_b')
+
+
 def coldroom_in_b(request):
     if not request.user.is_authenticated:
         messages.error(request, ' Please Login to Continue')

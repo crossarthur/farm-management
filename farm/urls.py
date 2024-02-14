@@ -36,6 +36,7 @@ urlpatterns = [
     path('drugs_overview_b/', new_views.drugs_overview_b, name='drugs_overview_b'),
     path('necessities_b/', new_views.necessities_b, name='necessities_b'),
     path('necessities_overview_b/', new_views.necessities_overview_b, name='necessities_overview_b'),
+    path('delete_necessities_b/<int:id>/', new_views.delete_necessities_b, name='delete_necessities_b'),
     path('coldroom_in_b/', new_views.coldroom_in_b, name='coldroom_in_b'),
     path('total_coldroom_b/', new_views.total_coldroom_b, name='total_coldroom_b'),
     path('production_b/', new_views.production_b, name='production_b'),

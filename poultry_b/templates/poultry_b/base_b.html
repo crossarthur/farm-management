@@ -184,10 +184,11 @@
          </svg>
       <span class="mx-2">Imprest</span></a>
                             <ul class="list-unstyled navbar-mobile-sub__list list-unstyled js-sub-list">
-
+                                {%if user.is_superuser%}
                                  <li>
                                     <a href="{%url 'imprest_b'%}">Add Imprest</a>
                                 </li>
+                                {%endif%}
                                  <li>
                                     <a href="{%url 'drugs_b'%}">Drugs</a>
                                 </li>
@@ -406,11 +407,11 @@
          </svg>
       <span class="mx-2">Imprest</span></a>
                             <ul class="list-unstyled navbar__sub-list list-unstyled js-sub-list">
-
+                                {%if user.is_superuser%}
                                  <li>
                                     <a href="{%url 'imprest_b'%}">Add Imprest</a>
                                 </li>
-
+                                {%endif%}
                                  <li>
                                     <a href="{%url 'drugs_b'%}">Drugs</a>
                                 </li>

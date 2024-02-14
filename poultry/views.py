@@ -764,6 +764,13 @@ def necessities_overview(request):
         return render(request, 'poultry/necessities_overview.html', context)
 
 
+def delete_necessities(request, id):
+    delete2 = Necessities.objects.get(pk=id)
+    imprest = Imprest.objects.values_list('total_imprest', flat=True).last()
+
+    delete2.delete()
+    return redirect('necessities_overview')
+
 
 def coldroom_in(request):
     if not request.user.is_authenticated:

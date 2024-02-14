@@ -69,7 +69,8 @@
         <td>₦{{rows.necessities_cost}}</td>
        <td>{{rows.date|date:"D d M"}}</td>
          {%if user.is_superuser%}
-        <td><a href="{%url 'update_necessities_b' rows.id%}" class="btn btn-sm btn-primary rounded-pill">Update</a></td>
+        <td><a href="{%url 'delete_necessities_b' rows.id%}" class="btn btn-sm btn-primary rounded-pill">Delete</a></td>
+
          {%endif%}
 
 
@@ -128,7 +129,7 @@
         <td>₦{{rows.necessities_cost}}</td>
        <td>{{rows.date|date:"D d M"}}</td>
         {%if user.is_superuser%}
-        <td><a href="{%url 'update_necessities_b' rows.id%}" class="btn btn-sm btn-primary rounded-pill">Update</a></td>
+        <td><a href="{%url 'delete_necessities_b' rows.id%}" class="btn btn-sm btn-primary rounded-pill">Delete</a></td>
          {%endif%}
 
 

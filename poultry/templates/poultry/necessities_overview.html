@@ -70,7 +70,7 @@
         <td>₦{{rows.necessities_cost}}</td>
        <td>{{rows.date|date:"D d M"}}</td>
          {%if user.is_superuser%}
-        <td><a href="{%url 'update_necessities' rows.id%}" class="btn btn-sm btn-primary rounded-pill">Update</a></td>
+        <td><a href="{%url 'delete_necessities' rows.id%}" class="btn btn-sm btn-danger rounded-pill">Delete</a></td>
          {%endif%}
 
 
@@ -84,9 +84,8 @@
      <div class="col-md-4">
    <div class="overview-wrap">
       <h2 class="title-1"></h2>
-      <a href="{%url 'drugs'%}"><button class="btn au-btn btn-sm btn-danger rounded-pill my-3">
-      <i class="zmdi zmdi-plus"></i>add drugs</button></a>
-
+      <a href="{%url 'necessities'%}"><button class="btn au-btn btn-sm btn-danger rounded-pill my-3">
+      <i class="zmdi zmdi-plus"></i>add necessities</button></a>
  </div>
     </div>
      <div class="col-md-2">
@@ -128,7 +127,7 @@
         <td>₦{{rows.necessities_cost}}</td>
        <td>{{rows.date|date:"D d M"}}</td>
         {%if user.is_superuser%}
-        <td><a href="{%url 'update_necessities' rows.id%}" class="btn btn-sm btn-primary rounded-pill">Update</a></td>
+        <td><a href="{%url 'delete_necessities' rows.id%}" class="btn btn-sm btn-danger rounded-pill">Delete</a></td>
          {%endif%}
 
 
@@ -142,8 +141,8 @@
      <div class="col-md-4">
    <div class="overview-wrap">
       <h2 class="title-1"></h2>
-      <a href="{%url 'drugs'%}"><button class="btn au-btn btn-sm btn-danger rounded-pill my-3">
-      <i class="zmdi zmdi-plus"></i>add drugs</button></a>
+      <a href="{%url 'necessities'%}"><button class="btn au-btn btn-sm btn-danger rounded-pill my-3">
+      <i class="zmdi zmdi-plus"></i>add necessities</button></a>
 
  </div>
     </div>
