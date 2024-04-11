@@ -17,7 +17,7 @@
          </svg>
       </i></h1>
                                 <hr>
-                                <div class="my-2">{%if imprest > 0%}</div>
+                                <div class="my-2"></div>
                                 <form method="post" class="shadow">
                                     {%csrf_token%}
                                      {{form|crispy}}
@@ -30,8 +30,6 @@
                             </div>
                         </div>
 
-         {%else%}
-           <div class="alert alert-danger">Insufficient Balance Add <a href="">Imprest</a></div>
-         {%endif%}
+
 
 {%endblock%}

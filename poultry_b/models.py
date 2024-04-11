@@ -12,7 +12,7 @@ class ChickenFigures_b(models.Model):
     chicken_out = models.IntegerField(default=0, null=True, blank=True)
     chicken_mortality = models.IntegerField(default=0, null=True, blank=True)
     chicken_slaughtered = models.IntegerField(default=0, null=True, blank=True)
-    chicken_out_kilogram = models.DecimalField(default=0.0, decimal_places=2, max_digits=5, null=True, blank=True)
+    chicken_out_kilogram = models.DecimalField(default=0.0, decimal_places=2, max_digits=6, null=True, blank=True)
     chicken_out_unit_price = models.IntegerField(default=0, null=True, blank=True)
     chicken_out_total_cost = models.IntegerField(default=0, null=True, blank=True)
     total_chicken = models.IntegerField(null=True, blank=True, default=0)

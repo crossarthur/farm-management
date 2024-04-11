@@ -158,12 +158,42 @@ def index(request):
     dru = drug['cal']
     necessities1 = Necessities.objects.aggregate(cal=Sum('necessities_cost'))
     nec = necessities1['cal']
-
+    expenditure = 0
     if pro is not None and fee is not None and dru is not None and nec is not None:
         expenditure = (pro + fee + dru + nec)
-        print(f' ex {expenditure}')
-    else:
-        expenditure = 0
+    elif pro and fee and dru is not None:
+        expenditure = fee + pro + dru
+    elif pro and fee and nec is not None:
+        expenditure = fee + pro + nec
+    elif pro and dru and nec is not None:
+        expenditure = pro + dru + nec
+    elif fee and dru and nec is not None:
+        expenditure = fee + dru + nec
+
+    elif pro and fee is not None:
+        expenditure = fee + pro
+    elif pro and nec is not None:
+        expenditure = pro + nec
+    elif pro and dru is not None:
+        expenditure = pro + dru
+    elif fee and nec is not None:
+        expenditure = fee + nec
+    elif fee and dru is not None:
+        expenditure = fee + dru
+    elif dru and nec is not None:
+        expenditure = dru + nec
+
+    elif fee is not None:
+        expenditure = fee
+    elif dru is not None:
+        expenditure = dru
+    elif nec is not None:
+        expenditure = nec
+    elif pro is not None:
+        expenditure = pro
+
+
+
 
 
     # total income
@@ -177,22 +207,99 @@ def index(request):
     profs = Profit.objects.values_list('income', flat=True).last()
     print(f'this is chi {income_offals}')
 
-
     cal = 0
     if income_chicken_out is not None:
         income = income_chicken_out
         print(f'tis is prof {profs}')
-        cal = income - expenditure
-        graph_exp = Profit(expenditure=expenditure, income=income)
-        Profit.objects.create(calculate=cal)
-        graph_exp.save()
+
+        if pro is not None and fee is not None and dru is not None and nec is not None:
+            cal = income - expenditure
+            print(f"this is my {cal}")
+            graph_exp = Profit(expenditure=expenditure, income=income)
+            Profit.objects.create(calculate=cal)
+            graph_exp.save()
+        elif fee is not None and pro is not None and dru:
+            cal = income - expenditure
+            graph_exp = Profit(expenditure=cal, income=income)
+            Profit.objects.create(calculate=cal)
+            graph_exp.save()
+
+        elif pro and fee and nec is not None:
+            cal = income - expenditure
+            graph_exp = Profit(expenditure=cal, income=income)
+            Profit.objects.create(calculate=cal)
+            graph_exp.save()
+        elif pro and dru and nec is not None:
+            cal = income - expenditure
+            graph_exp = Profit(expenditure=cal, income=income)
+            Profit.objects.create(calculate=cal)
+            graph_exp.save()
+        elif fee and dru and nec is not None:
+            cal = income - expenditure
+            graph_exp = Profit(expenditure=cal, income=income)
+            Profit.objects.create(calculate=cal)
+            graph_exp.save()
+
+        elif fee is not None and pro is not None:
+            cal = income - expenditure
+            graph_exp = Profit(expenditure=cal, income=income)
+            Profit.objects.create(calculate=cal)
+            graph_exp.save()
+        elif pro and nec is not None:
+            cal = income - expenditure
+            graph_exp = Profit(expenditure=cal, income=income)
+            Profit.objects.create(calculate=cal)
+            graph_exp.save()
+        elif pro and dru is not None:
+            cal = income - expenditure
+            graph_exp = Profit(expenditure=cal, income=income)
+            Profit.objects.create(calculate=cal)
+            graph_exp.save()
+        elif fee and nec is not None:
+            cal = income - expenditure
+            graph_exp = Profit(expenditure=cal, income=income)
+            Profit.objects.create(calculate=cal)
+            graph_exp.save()
+        elif fee and dru is not None:
+            cal = income - expenditure
+            graph_exp = Profit(expenditure=cal, income=income)
+            Profit.objects.create(calculate=cal)
+            graph_exp.save()
+        elif dru and nec is not None:
+            cal = income - expenditure
+            graph_exp = Profit(expenditure=cal, income=income)
+            Profit.objects.create(calculate=cal)
+            graph_exp.save()
+
+
+        elif pro is not None:
+            cal = income - pro
+            graph_exp = Profit(expenditure=cal, income=income)
+            Profit.objects.create(calculate=cal)
+            graph_exp.save()
+        elif fee is not None:
+            cal = income - expenditure
+            graph_exp = Profit(expenditure=cal, income=income)
+            Profit.objects.create(calculate=cal)
+            graph_exp.save()
+        elif dru is not None:
+            cal = income - expenditure
+            graph_exp = Profit(expenditure=cal, income=income)
+            Profit.objects.create(calculate=cal)
+            graph_exp.save()
+        elif nec is not None:
+            cal = income - expenditure
+            graph_exp = Profit(expenditure=cal, income=income)
+            Profit.objects.create(calculate=cal)
+            graph_exp.save()
+
 
     else:
         income1 = 0
         income2 = 0
         income = 0
 
-    print(f'exp{expenditure}')
+
     print(graph_income)
 
     if cal < 0:
@@ -209,9 +316,7 @@ def index(request):
         graph_exp = Profit(expenditure=expenditure, income=income1)
         Profit.objects.create(calculate=cal)
         graph_exp.save()
-    fin = 0
-    if cal != 0:
-        fin = (total_chicken_nu / cal) * 100
+
 
     # prnts = Profit.objects.annotate(hour=ExtractHour('date'), interval=F('hour')% 2).values('hour').annotate(sum=Sum=(F('calculate')-expenditure)).values('hour', 'sum').distinct()
     # saving expenditure and income to database & saving calculate/profit to database
@@ -301,7 +406,7 @@ def index(request):
 
     profs = Profit.objects.values_list('income', flat=True).last()
 
-
+    print(expenditure)
     context = {
         "nec_value": nec_value,
         "feed_value": feed_value,
@@ -319,7 +424,7 @@ def index(request):
         'expenditure': expenditure,
         'income': income,
         'cal': cal,
-        'fin': fin,
+
         'prof': prof,
         'profs': profs,
         'graph_income': graph_income,
@@ -372,7 +477,6 @@ def chicken(request):
     date =  None
     queryset = None
 
-
     if request.method == 'GET':
         date = request.GET.get('date')
         print(date)
@@ -381,11 +485,9 @@ def chicken(request):
             queryset = ChickenFigures.objects.filter(date__icontains=date)
             print(queryset)
 
-
         else:
             date = None
             queryset = ChickenFigures.objects.all()
-
 
     if request.method == 'POST':
         form = ChickenFigureForm(request.POST)
@@ -460,34 +562,36 @@ def chickens_out(request):
             instance = form.save(commit=False)
 
             if instance.chicken_out_kilogram > 0 and instance.chicken_out_unit_price > 0 and instance.chicken_out > 0 and instance.customer is not None and instance.total_chicken is not None:
-                total_chicken_num -= instance.chicken_out
-                chicken_out_total_cost_num = instance.chicken_out_kilogram * instance.chicken_out_unit_price
-                tot1 = ChickenFigures(total_chicken=total_chicken_num, chicken_out=instance.chicken_out,
+                if instance.chicken_out < total_chicken_num:
+                    total_chicken_num -= instance.chicken_out
+                    chicken_out_total_cost_num = instance.chicken_out_kilogram * instance.chicken_out_unit_price
+                    tot1 = ChickenFigures(total_chicken=total_chicken_num, chicken_out=instance.chicken_out,
                                       chicken_out_total_cost=chicken_out_total_cost_num,
                                       chicken_out_kilogram=instance.chicken_out_kilogram,
                                       chicken_out_unit_price=instance.chicken_out_unit_price, customer=instance.customer, customer_rank=customer1)
-                tot2 = CustomerRank(customer_rk=customer1)
-                '''total3 = instance.chicken_out - total2
-                tot3 = ColdRoomIn(total_coldroom=total3)
-                tot3.save()'''
-                tot2.save()
-                tot1.save()
+                    tot2 = CustomerRank(customer_rk=customer1)
 
-                messages.success(request, f'Total cost of chickens out is ₦{chicken_out_total_cost_num}')
+                    tot2.save()
+                    tot1.save()
 
-                if instance.chicken_out == 1:
+                    messages.success(request, f'Total cost of chickens out is ₦{chicken_out_total_cost_num}')
+                    return redirect('.')
+
+                if instance.chicken_out == 1 and total_chicken_num >= instance.chicken_out:
                     messages.error(request, f'{instance.chicken_out} Chicken has been taken out.')
                     return redirect('.')
-                elif instance.chicken_out >= 1:
 
+                elif 1 <= instance.chicken_out <= total_chicken_num:
                     messages.error(request, f'{instance.chicken_out} Chickens have been taken out.')
                     return redirect('.')
 
-            else:
-                total_chicken_num -= instance.chicken_out
-                tot1 = ChickenFigures(total_chicken=total_chicken_num, chicken_out=instance.chicken_out)
-                tot1.save()
-                return redirect('chickens_out')
+                else:
+                    messages.error(request, 'Error in operation, please confirm number chickens in poultry')
+                    return redirect('.')
+
+                # elif total_chicken_num < instance.chicken_out:
+                #     print('hello dear')
+
     else:
         form = ChickenOutForm()
     context = {
@@ -547,6 +651,13 @@ def chickens_slaughtered(request):
     return render(request, 'poultry/chickens_slaughtered.html', context)
 
 
+def delete_chickens_slaughtered(request, id):
+    imprest = Imprest.objects.values_list('total_imprest', flat=True).last()
+    delete = ChickenFigures.objects.get(pk=id)
+    delete.delete()
+    return redirect('chickens_slaughtered')
+
+
 def chickens_mortality(request):
     if not request.user.is_authenticated:
         messages.error(request, ' Please Login to Continue')
@@ -588,6 +699,13 @@ def chickens_mortality(request):
         'imprest': imprest
     }
     return render(request, 'poultry/chickens_mortality.html', context)
+
+
+def delete_chickens_mortality(request, id):
+    imprest = Imprest.objects.values_list('total_imprest', flat=True).last()
+    delete = ChickenFigures.objects.get(pk=id)
+    delete.delete()
+    return redirect('chickens_mortality')
 
 
 
@@ -653,7 +771,7 @@ def drugs(request):
         form = DrugForm(request.POST)
         if form.is_valid():
             instance = form.save(commit=False)
-            if instance.drug_cost is not None and imprest is not None and instance.drug_cost <= imprest:
+            if instance.drug_cost is not None and imprest is not None:
                 imprest -= instance.drug_cost
                 tot = Imprest(total_imprest=imprest)
                 tot2 = Drugs(drug_cost=instance.drug_cost,  drug_description=instance.drug_description)
@@ -661,9 +779,7 @@ def drugs(request):
                 tot2.save()
                 messages.success(request, f'₦{instance.drug_cost} for {instance.drug_description} has been submitted')
                 return redirect('drugs_overview')
-            elif instance.drug_cost > imprest:
-                messages.error(request, 'Insufficient funds in imprest')
-                return redirect(".")
+
             else:
                 messages.error(request, 'Error')
                 return redirect('drugs_overview')
@@ -706,7 +822,7 @@ def drugs_overview(request):
 def delete_drugs(request, id):
     delete2 = Drugs.objects.get(pk=id)
     imprest = Imprest.objects.values_list('total_imprest', flat=True).last()
-    if delete2 and delete2.drug_cost is not None and imprest is not None and delete2.drug_cost <= imprest:
+    if delete2 and delete2.drug_cost is not None and imprest is not None:
                 imprest += delete2.drug_cost
                 tot = Imprest(total_imprest=imprest)
                 tot.save()
@@ -875,7 +991,7 @@ def production(request):
         form = ProductionForm(request.POST)
         if form.is_valid():
             instance = form.save(commit=False)
-            if instance.production_cost is not None and imprest is not None and instance.production_cost <= imprest:
+            if instance.production_cost is not None and imprest is not None:
                 imprest -= instance.production_cost
                 tot = Imprest(total_imprest=imprest)
                 tot2 = Production(production_cost=instance.production_cost,  production_description=instance.production_description)
@@ -883,9 +999,7 @@ def production(request):
                 tot2.save()
                 messages.success(request, f'{instance.production_description} has been submitted')
                 return redirect(".")
-            elif instance.production_cost > imprest:
-                messages.error(request, 'Insufficient funds in imprest')
-                return redirect(".")
+
             else:
                 messages.error(request, 'Error')
                 return redirect('production')
@@ -908,7 +1022,7 @@ def production(request):
 def delete_production(request, id):
     delete2 = Production.objects.get(pk=id)
     imprest = Imprest.objects.values_list('total_imprest', flat=True).last()
-    if delete2 and delete2.production_cost is not None and imprest is not None and delete2.production_cost <= imprest:
+    if delete2 and delete2.production_cost is not None and imprest is not None:
                 imprest += delete2.production_cost
                 tot = Imprest(total_imprest=imprest)
                 tot.save()
@@ -1060,7 +1174,7 @@ def update_drugs(request, id):
                 return redirect('drugs_overview')
 
             else:
-                messages.error(request, 'Insufficient funds in impress')
+                messages.error(request, 'Insufficient funds in imprest')
                 return redirect('drugs_overview')
 
     return render(request, 'poultry/update_drugs.html', {'form': form, 'upd': upd, 'imprest': imprest})
@@ -1237,7 +1351,7 @@ def offals(request):
         form = OffalsForm(request.POST)
         if form.is_valid():
             instance = form.save(commit=False)
-            if instance.offals_cost is not None and income is not None:
+            if instance.offals_cost and instance.offals_description is not None and income is not None:
                 income += instance.offals_cost
                 print(f'this is {income}')
                 tot = Profit(income=income)
@@ -1246,6 +1360,9 @@ def offals(request):
                 tot2.save()
                 messages.success(request, 'offals have been submitted')
                 return redirect('offals_overview')
+            else:
+                messages.error(request, 'Sorry, you have no expenditure, therefore offal can not exist')
+                return redirect('.')
     else:
         form = OffalsForm()
 
@@ -1264,3 +1381,11 @@ def offals_overview(request):
         'imprest': imprest,
     }
     return render(request, 'poultry/offals_overview.html', context)
+
+
+def offals_overview_delete(request, id):
+    delete2 = Offals.objects.get(pk=id)
+    imprest = Imprest.objects.values_list('total_imprest', flat=True).last()
+
+    delete2.delete()
+    return redirect('offals_overview')

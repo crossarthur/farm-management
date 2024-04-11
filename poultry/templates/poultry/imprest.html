@@ -4,6 +4,34 @@
 {%block head%}Imprest{%endblock%}
 
 {%block content%}
+<button class="btn btn-danger" onclick="showNotification()">Show Notification</button>
+<script>
+
+
+function showNotification() {
+  // Checking if the browser supports the Notification API
+  if (!("Notification" in window)) {
+    alert("This browser does not support desktop notification");
+  }
+  // Checking if the user has denied notifications
+  else if (Notification.permission === "denied") {
+    alert("You have denied notification permission. Please allow it in your browser settings.");
+  }
+  // Requesting permission if it's not yet granted
+  else if (Notification.permission !== "granted") {
+    Notification.requestPermission().then(function(permission) {
+      if (permission === "granted") {
+        new Notification("Hello, World!");
+      }
+    });
+  }
+  // Showing notification if permission is granted
+  else {
+    new Notification("Hello, World!");
+  }
+}
+</script>
+
 
 
  <div class="container-fluid">
@@ -28,6 +56,7 @@
                                 </div>
                             </div>
                         </div>
+
 
 
 

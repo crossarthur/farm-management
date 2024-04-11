@@ -21,7 +21,7 @@
                                 </svg>
 
                               </h1>
-                            <div class="my-2">{%if imprest > 0%}</div>
+                            <div class="my-2"></div>
                                 <form method="post">
                                     {%csrf_token%}
                                      {{form|crispy}}
@@ -44,9 +44,7 @@
                </div>
             </form>
 
-          {%else%}
-           <div class="alert alert-danger">Insufficient Balance Add <a href="{%url 'total_imprest'%}">Imprest</a></div>
-         {%endif%}
+
 
                                 <div class="row">
   <div class="col-12">

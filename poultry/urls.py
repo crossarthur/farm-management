@@ -10,7 +10,9 @@ urlpatterns = [
     path('chicken/', views.chicken, name='chicken'),
     path('chickens_out/', views.chickens_out, name='chickens_out'),
     path('chickens_slaughtered/', views.chickens_slaughtered, name='chickens_slaughtered'),
+    path('delete_chickens_slaughtered/<int:id>/', views.delete_chickens_slaughtered, name='delete_chickens_slaughtered'),
     path('chickens_mortality/', views.chickens_mortality, name='chickens_mortality'),
+    path('delete_chickens_mortality/<int:id>/', views.delete_chickens_mortality, name='delete_chickens_mortality'),
     path('feed/', views.feed, name='feed'),
     path('feed_overview/', views.feed_overview, name='feed_overview'),
     path('drugs/', views.drugs, name='drugs'),
@@ -41,4 +43,5 @@ urlpatterns = [
     path('notepad_overview/', views.notepad_overview, name='notepad_overview'),
     path('offals/', views.offals, name='offals'),
     path('offals_overview/', views.offals_overview, name='offals_overview'),
+    path('offals_overview_delete/<int:id>/', views.offals_overview_delete, name='offals_overview_delete'),
 ]

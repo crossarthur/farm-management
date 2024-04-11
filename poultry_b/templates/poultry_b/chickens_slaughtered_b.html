@@ -56,6 +56,7 @@
     <tr>
       <th scope="col">Chicken Slaughtered</th>
         <th scope="col">Date</th>
+        <th scope="col">Action</th>
 
 
     </tr>
@@ -79,6 +80,12 @@
        {{rows.is_hidden}}
         {%else%}
             <td>{{rows.date|date:"D d M"}}</td>
+        {%endif%}
+         {%if rows.chicken_slaughtered == 0%}
+       {{rows.is_hidden}}
+        {%else%}
+            <td><a href="{%url 'delete_chickens_slaughtered_b' rows.id%}" class="btn btn-sm btn-danger rounded-pill">Delete</a></td>
+
         {%endif%}
 
     </tr>

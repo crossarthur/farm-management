@@ -14,10 +14,10 @@
 
                         <div class="row">
                             <div class="col-6 offset-3">
-                                {%if total_chicken_num == 0 or total_chicken_num < 0%}
 
+                              {%if total_chicken_num == 0 or total_chicken_num < 0%}
                                 <div class="alert alert-danger">There are no Chickens Available</div>
-                                {%else%}
+                              {%else%}
                                 <div>{%include 'poultry/message.html'%}</div>
                                 <h1>Chickens Out
                                  <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-feather text-danger" viewBox="0 0 16 16">
@@ -205,6 +205,5 @@
 {%endif%}
 
 {%endif%}
-
 
 {%endblock%}

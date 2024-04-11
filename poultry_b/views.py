@@ -59,6 +59,7 @@ def add_b(request):
         form = ChickenForm()
         return render(request, 'poultry_b/add_b.html', {'form': form, 'imprest': imprest})
 
+
 def index_b(request):
     if not request.user.is_authenticated:
         messages.error(request, ' Please Login to Continue')
@@ -111,12 +112,42 @@ def index_b(request):
     dru = drug['cal']
     necessities1 = Necessities_b.objects.aggregate(cal=Sum('necessities_cost'))
     nec = necessities1['cal']
-
+    expenditure = 0
     if pro is not None and fee is not None and dru is not None and nec is not None:
         expenditure = (pro + fee + dru + nec)
-        print(f' ex {expenditure}')
-    else:
-        expenditure = 0
+    elif pro and fee and dru is not None:
+        expenditure = fee + pro + dru
+    elif pro and fee and nec is not None:
+        expenditure = fee + pro + nec
+    elif pro and dru and nec is not None:
+        expenditure = pro + dru + nec
+    elif fee and dru and nec is not None:
+        expenditure = fee + dru + nec
+
+    elif pro and fee is not None:
+        expenditure = fee + pro
+    elif pro and nec is not None:
+        expenditure = pro + nec
+    elif pro and dru is not None:
+        expenditure = pro + dru
+    elif fee and nec is not None:
+        expenditure = fee + nec
+    elif fee and dru is not None:
+        expenditure = fee + dru
+    elif dru and nec is not None:
+        expenditure = dru + nec
+
+    elif fee is not None:
+        expenditure = fee
+    elif dru is not None:
+        expenditure = dru
+    elif nec is not None:
+        expenditure = nec
+    elif pro is not None:
+        expenditure = pro
+
+
+
 
 
     # total income
@@ -130,22 +161,99 @@ def index_b(request):
     profs = Profit_b.objects.values_list('income', flat=True).last()
     print(f'this is chi {income_offals}')
 
-
     cal = 0
     if income_chicken_out is not None:
         income = income_chicken_out
         print(f'tis is prof {profs}')
-        cal = income - expenditure
-        graph_exp = Profit_b(expenditure=expenditure, income=income)
-        Profit_b.objects.create(calculate=cal)
-        graph_exp.save()
+
+        if pro is not None and fee is not None and dru is not None and nec is not None:
+            cal = income - expenditure
+            print(f"this is my {cal}")
+            graph_exp = Profit_b(expenditure=expenditure, income=income)
+            Profit_b.objects.create(calculate=cal)
+            graph_exp.save()
+        elif fee is not None and pro is not None and dru:
+            cal = income - expenditure
+            graph_exp = Profit_b(expenditure=cal, income=income)
+            Profit_b.objects.create(calculate=cal)
+            graph_exp.save()
+
+        elif pro and fee and nec is not None:
+            cal = income - expenditure
+            graph_exp = Profit_b(expenditure=cal, income=income)
+            Profit_b.objects.create(calculate=cal)
+            graph_exp.save()
+        elif pro and dru and nec is not None:
+            cal = income - expenditure
+            graph_exp = Profit_b(expenditure=cal, income=income)
+            Profit_b.objects.create(calculate=cal)
+            graph_exp.save()
+        elif fee and dru and nec is not None:
+            cal = income - expenditure
+            graph_exp = Profit_b(expenditure=cal, income=income)
+            Profit_b.objects.create(calculate=cal)
+            graph_exp.save()
+
+        elif fee is not None and pro is not None:
+            cal = income - expenditure
+            graph_exp = Profit_b(expenditure=cal, income=income)
+            Profit_b.objects.create(calculate=cal)
+            graph_exp.save()
+        elif pro and nec is not None:
+            cal = income - expenditure
+            graph_exp = Profit_b(expenditure=cal, income=income)
+            Profit_b.objects.create(calculate=cal)
+            graph_exp.save()
+        elif pro and dru is not None:
+            cal = income - expenditure
+            graph_exp = Profit_b(expenditure=cal, income=income)
+            Profit_b.objects.create(calculate=cal)
+            graph_exp.save()
+        elif fee and nec is not None:
+            cal = income - expenditure
+            graph_exp = Profit_b(expenditure=cal, income=income)
+            Profit_b.objects.create(calculate=cal)
+            graph_exp.save()
+        elif fee and dru is not None:
+            cal = income - expenditure
+            graph_exp = Profit_b(expenditure=cal, income=income)
+            Profit_b.objects.create(calculate=cal)
+            graph_exp.save()
+        elif dru and nec is not None:
+            cal = income - expenditure
+            graph_exp = Profit_b(expenditure=cal, income=income)
+            Profit_b.objects.create(calculate=cal)
+            graph_exp.save()
+
+
+        elif pro is not None:
+            cal = income - pro
+            graph_exp = Profit_b(expenditure=cal, income=income)
+            Profit_b.objects.create(calculate=cal)
+            graph_exp.save()
+        elif fee is not None:
+            cal = income - expenditure
+            graph_exp = Profit_b(expenditure=cal, income=income)
+            Profit_b.objects.create(calculate=cal)
+            graph_exp.save()
+        elif dru is not None:
+            cal = income - expenditure
+            graph_exp = Profit_b(expenditure=cal, income=income)
+            Profit_b.objects.create(calculate=cal)
+            graph_exp.save()
+        elif nec is not None:
+            cal = income - expenditure
+            graph_exp = Profit_b(expenditure=cal, income=income)
+            Profit_b.objects.create(calculate=cal)
+            graph_exp.save()
+
 
     else:
         income1 = 0
         income2 = 0
         income = 0
 
-    print(f'exp{expenditure}')
+
     print(graph_income)
 
     if cal < 0:
@@ -162,9 +270,7 @@ def index_b(request):
         graph_exp = Profit_b(expenditure=expenditure, income=income1)
         Profit_b.objects.create(calculate=cal)
         graph_exp.save()
-    fin = 0
-    if cal != 0:
-        fin = (total_chicken_nu / cal) * 100
+
 
     # prnts = Profit.objects.annotate(hour=ExtractHour('date'), interval=F('hour')% 2).values('hour').annotate(sum=Sum=(F('calculate')-expenditure)).values('hour', 'sum').distinct()
     # saving expenditure and income to database & saving calculate/profit to database
@@ -254,7 +360,7 @@ def index_b(request):
 
     profs = Profit_b.objects.values_list('income', flat=True).last()
 
-
+    print(expenditure)
     context = {
         "nec_value": nec_value,
         "feed_value": feed_value,
@@ -272,7 +378,7 @@ def index_b(request):
         'expenditure': expenditure,
         'income': income,
         'cal': cal,
-        'fin': fin,
+
         'prof': prof,
         'profs': profs,
         'graph_income': graph_income,
@@ -290,7 +396,6 @@ def index_b(request):
 
     }
     return render(request, 'poultry_b/index_b.html', context)
-
 
 
 def chicken_b(request):
@@ -407,34 +512,36 @@ def chickens_out_b(request):
             instance = form.save(commit=False)
 
             if instance.chicken_out_kilogram > 0 and instance.chicken_out_unit_price > 0 and instance.chicken_out > 0 and instance.customer is not None and instance.total_chicken is not None:
-                total_chicken_num -= instance.chicken_out
-                chicken_out_total_cost_num = instance.chicken_out_kilogram * instance.chicken_out_unit_price
-                tot1 = ChickenFigures_b(total_chicken=total_chicken_num, chicken_out=instance.chicken_out,
+                if instance.chicken_out < total_chicken_num:
+                    total_chicken_num -= instance.chicken_out
+                    chicken_out_total_cost_num = instance.chicken_out_kilogram * instance.chicken_out_unit_price
+                    tot1 = ChickenFigures_b(total_chicken=total_chicken_num, chicken_out=instance.chicken_out,
                                       chicken_out_total_cost=chicken_out_total_cost_num,
                                       chicken_out_kilogram=instance.chicken_out_kilogram,
                                       chicken_out_unit_price=instance.chicken_out_unit_price, customer=instance.customer, customer_rank=customer1)
-                tot2 = CustomerRank_b(customer_rk=customer1)
-                '''total3 = instance.chicken_out - total2
-                tot3 = ColdRoomIn(total_coldroom=total3)
-                tot3.save()'''
-                tot2.save()
-                tot1.save()
+                    tot2 = CustomerRank_b(customer_rk=customer1)
 
-                messages.success(request, f'Total cost of chickens out is ₦{chicken_out_total_cost_num}')
+                    tot2.save()
+                    tot1.save()
 
-                if instance.chicken_out == 1:
+                    messages.success(request, f'Total cost of chickens out is ₦{chicken_out_total_cost_num}')
+                    return redirect('.')
+
+                if instance.chicken_out == 1 and total_chicken_num >= instance.chicken_out:
                     messages.error(request, f'{instance.chicken_out} Chicken has been taken out.')
                     return redirect('.')
-                elif instance.chicken_out >= 1:
 
+                elif 1 <= instance.chicken_out <= total_chicken_num:
                     messages.error(request, f'{instance.chicken_out} Chickens have been taken out.')
                     return redirect('.')
 
-            else:
-                total_chicken_num -= instance.chicken_out
-                tot1 = ChickenFigures_b(total_chicken=total_chicken_num, chicken_out=instance.chicken_out)
-                tot1.save()
-                return redirect('chickens_out_b')
+                else:
+                    messages.error(request, 'Error in operation, please confirm number chickens in poultry')
+                    return redirect('.')
+
+                # elif total_chicken_num < instance.chicken_out:
+                #     print('hello dear')
+
     else:
         form = ChickenOutForm()
     context = {
@@ -494,6 +601,13 @@ def chickens_slaughtered_b(request):
     return render(request, 'poultry_b/chickens_slaughtered_b.html', context)
 
 
+def delete_chickens_slaughtered_b(request, id):
+    imprest = Imprest_b.objects.values_list('total_imprest', flat=True).last()
+    delete = ChickenFigures_b.objects.get(pk=id)
+    delete.delete()
+    return redirect('chickens_slaughtered_b')
+
+
 def chickens_mortality_b(request):
     if not request.user.is_authenticated:
         messages.error(request, ' Please Login to Continue')
@@ -535,6 +649,13 @@ def chickens_mortality_b(request):
         'imprest': imprest
     }
     return render(request, 'poultry_b/chickens_mortality_b.html', context)
+
+
+def delete_chickens_mortality_b(request, id):
+    imprest = Imprest_b.objects.values_list('total_imprest', flat=True).last()
+    delete = ChickenFigures_b.objects.get(pk=id)
+    delete.delete()
+    return redirect('chickens_mortality_b')
 
 
 def feed_b(request):
@@ -805,13 +926,11 @@ def production_b(request):
             date = None
             queryset = Production_b.objects.all()
 
-
-
     if request.method == 'POST':
         form = ProductionForm(request.POST)
         if form.is_valid():
             instance = form.save(commit=False)
-            if instance.production_cost is not None and imprest is not None and instance.production_cost <= imprest:
+            if instance.production_cost is not None and imprest is not None:
                 imprest -= instance.production_cost
                 tot = Imprest_b(total_imprest=imprest)
                 tot2 = Production_b(production_cost=instance.production_cost,  production_description=instance.production_description)
@@ -819,12 +938,10 @@ def production_b(request):
                 tot2.save()
                 messages.success(request, f'{instance.production_description} has been submitted')
                 return redirect(".")
-            elif instance.production_cost > imprest:
-                messages.error(request, 'Insufficient funds in imprest')
-                return redirect(".")
+
             else:
                 messages.error(request, 'Error')
-                return redirect('production_b')
+                return redirect('production')
 
     else:
 
@@ -839,7 +956,6 @@ def production_b(request):
             'total_production2': total_production2,
         }
         return render(request, 'poultry_b/production_b.html', context)
-
 
 def delete_production_b(request, id):
     delete2 = Production_b.objects.get(pk=id)
@@ -999,6 +1115,15 @@ def offals_overview_b(request):
         'imprest': imprest,
     }
     return render(request, 'poultry_b/offals_overview_b.html', context)
+
+
+def offals_overview_delete_b(request, id):
+
+    delete2 = Offals_b.objects.get(pk=id)
+    imprest = Imprest_b.objects.values_list('total_imprest', flat=True).last()
+
+    delete2.delete()
+    return redirect('offals_overview_b')
 
 
 def delete_chicken_b(request, id):
